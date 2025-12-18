@@ -1,0 +1,94 @@
+@use "variables" as *;
+@use "mixins";
+
+.login-container {
+  @include mixins.flex();
+
+  height: 100vh;
+  background-color: $color-primary;
+  padding: 20px;
+}
+
+.logo {
+  display: block;
+  margin: 0 auto 10px auto;
+}
+
+.logo-container {
+  @include mixins.flex();
+
+  text-align: center;
+}
+
+.login-card {
+  @include mixins.flex();
+  width: 100%;
+}
+
+.title {
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: $color-white;
+  margin-bottom: 50px;
+  text-align: center;
+}
+
+.login-form {
+  @include mixins.flex();
+
+  width: 100%;
+  max-width: 400px;
+}
+
+.input-field {
+  border-radius: $border-radius-btn;
+  font-size: 1.2rem;
+  padding: 20px 25px;
+  width: 100%;
+  background-color: $color-white;
+  border: none;
+  box-shadow: 0px 3px 7.5px rgba(0, 0, 0, 0.05);
+
+  &:last-of-type {
+    margin: 10px 0 50px 0;
+  }
+
+  &::placeholder {
+    color: #afafaf;
+  }
+}
+
+.btn-primary {
+  font-size: 20px;
+  font-weight: bold;
+  font-family: $font-family-primary;
+
+  width: 100%;
+  border: none;
+  border-radius: $border-radius-btn;
+  padding: 18px 0;
+
+  background-color: $color-secondary;
+  color: $color-white;
+  box-shadow: 0px 3px 7.5px rgba(0, 0, 0, 0.47);
+
+  cursor: pointer;
+}
+
+.forgot-password {
+  margin-top: 20px;
+  color: $color-white;
+  font-size: 1rem;
+}
+
+.signup-section {
+  margin-top: 125px;
+
+  & span,
+  a {
+    font-family: $font-family-primary;
+    font-weight: 400;
+    color: $color-white;
+    font-size: 1rem;
+  }
+}
