@@ -50,7 +50,7 @@
   box-shadow: 0px 3px 7.5px rgba(0, 0, 0, 0.05);
 
   &:last-of-type {
-    margin: 10px 0 50px 0;
+    margin: 10px 0;
   }
 
   &::placeholder {
@@ -66,6 +66,7 @@
   width: 100%;
   border: none;
   border-radius: $border-radius-btn;
+  margin-top: 50px;
   padding: 18px 0;
 
   background-color: $color-secondary;
@@ -73,6 +74,17 @@
   box-shadow: 0px 3px 7.5px rgba(0, 0, 0, 0.47);
 
   cursor: pointer;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.error-message {
+  color: #ff6b6b;
+  font-size: 0.9rem;
+  text-align: center;
 }
 
 .forgot-password {

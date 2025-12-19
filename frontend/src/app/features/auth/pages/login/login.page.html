@@ -6,21 +6,27 @@
       <h1 class="title">GUARDIANS</h1>
     </div>
 
-    <form class="login-form">
+    <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <input
-        type="text"
+        type="email"
         class="input-field"
-        placeholder="Usuário"
+        placeholder="E-mail"
+        formControlName="email"
       />
 
       <input
         type="password"
         class="input-field"
         placeholder="Senha"
+        formControlName="password"
       />
 
-      <button type="submit" class="btn-primary">
-        ENTRAR
+      @if (errorMessage) {
+        <div class="error-message">{{ errorMessage }}</div>
+      }
+
+      <button type="submit" class="btn-primary" [disabled]="isLoading || loginForm.invalid">
+        {{ isLoading ? 'CARREGANDO...' : 'ENTRAR' }}
       </button>
 
       <a href="#" class="forgot-password">Esqueci minha senha</a>
