@@ -1,0 +1,52 @@
+<div class="register-container">
+  <div class="register-card">
+    <app-logo-header />
+
+    <form class="register-form" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <input
+        type="text"
+        class="input-field"
+        placeholder="Nome completo"
+        formControlName="name"
+      />
+
+      <input
+        type="email"
+        class="input-field"
+        placeholder="E-mail"
+        formControlName="email"
+      />
+
+      <input
+        type="password"
+        class="input-field"
+        placeholder="Senha"
+        formControlName="password"
+      />
+
+      <input
+        type="password"
+        class="input-field"
+        placeholder="Confirmar senha"
+        formControlName="confirmPassword"
+      />
+
+      @if (registerForm.get('confirmPassword')?.hasError('passwordMismatch') && registerForm.get('confirmPassword')?.touched) {
+        <app-error-message message="As senhas não coincidem" />
+      }
+
+      <app-error-message [message]="errorMessage" />
+
+      <app-primary-button 
+        text="CADASTRAR" 
+        loadingText="CADASTRANDO..." 
+        [isLoading]="isLoading" 
+        [disabled]="registerForm.invalid" />
+    </form>
+
+    <div class="login-section">
+      <span>Já tem cadastro? </span>
+      <a (click)="goToLogin()" class="login-link">Fazer login</a>
+    </div>
+  </div>
+</div>

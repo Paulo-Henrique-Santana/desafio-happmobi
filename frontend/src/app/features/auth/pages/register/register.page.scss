@@ -1,7 +1,7 @@
 @use "variables" as *;
 @use "mixins";
 
-.login-container {
+.register-container {
   @include mixins.flex();
 
   height: 100vh;
@@ -9,12 +9,12 @@
   padding: 20px;
 }
 
-.login-card {
+.register-card {
   @include mixins.flex();
   width: 100%;
 }
 
-.login-form {
+.register-form {
   @include mixins.flex();
 
   width: 100%;
@@ -41,22 +41,20 @@
   &::placeholder {
     color: #afafaf;
   }
+
+  &:focus {
+    outline: 2px solid rgba($color-secondary, 0.3);
+  }
 }
 
 app-primary-button {
   display: block;
   width: 100%;
-  margin-top: 50px;
+  margin-top: 30px;
 }
 
-.forgot-password {
-  margin-top: 20px;
-  color: $color-white;
-  font-size: 1rem;
-}
-
-.signup-section {
-  margin-top: 125px;
+.login-section {
+  margin-top: 40px;
 
   & span,
   a {
@@ -64,5 +62,14 @@ app-primary-button {
     font-weight: 400;
     color: $color-white;
     font-size: 1rem;
+  }
+
+  .login-link {
+    text-decoration: underline;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.8;
+    }
   }
 }

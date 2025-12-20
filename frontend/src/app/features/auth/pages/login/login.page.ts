@@ -5,13 +5,17 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { finalize } from 'rxjs';
 import { AuthService } from '../../../../core/services/auth/auth.service';
+import { ErrorMessageComponent } from '../../../../shared/components/error-message/error-message.component';
+import { LogoHeaderComponent } from '../../../../shared/components/logo-header/logo-header.component';
+import { PrimaryButtonComponent } from '../../../../shared/components/primary-button/primary-button.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink, LogoHeaderComponent, PrimaryButtonComponent, ErrorMessageComponent],
   templateUrl: './login.page.html',
   styleUrl: './login.page.scss',
 })

@@ -1,0 +1,21 @@
+@use "variables" as *;
+@use "mixins";
+
+.logo {
+  display: block;
+  margin: 0 auto 10px auto;
+}
+
+.logo-container {
+  @include mixins.flex();
+
+  text-align: center;
+}
+
+.title {
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: $color-white;
+  margin-bottom: 50px;
+  text-align: center;
+}
