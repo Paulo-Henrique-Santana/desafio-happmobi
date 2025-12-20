@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { LoginRequest, loginResponse } from '../../../shared/models/auth.model';
+import { User } from '../../../shared/models/user.model';
 import { BaseService } from '../base/base-http.service';
 
 @Injectable({
@@ -33,7 +34,7 @@ export class AuthService extends BaseService {
     return localStorage.getItem(this.TOKEN_KEY);
   }
 
-  getUser(): any {
+  getUser(): User | null {
     const user = localStorage.getItem(this.USER_KEY);
     return user ? JSON.parse(user) : null;
   }

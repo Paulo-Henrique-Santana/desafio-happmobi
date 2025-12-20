@@ -1,0 +1,190 @@
+@use "variables" as *;
+@use "mixins";
+
+.home-container {
+  min-height: 100vh;
+  background-color: $color-white;
+  padding-bottom: 98px;
+}
+
+.header {
+  background-color: $color-primary;
+  padding: 71px 20px 50px;
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -389px;
+    right: 0;
+    height: 270px;
+    background-image: url('/assets/images/header-background.png');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.12;
+    z-index: 0;
+  }
+}
+
+.header-content {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.user-info {
+  @include mixins.flex();
+  gap: 10px;
+}
+
+.user-photo {
+  width: 104px;
+  height: 104px;
+  border-radius: 50%;
+  border: 2px solid $color-secondary;
+  box-shadow: 0px 3px 7.5px rgba(0, 0, 0, 0.45);
+  object-fit: cover;
+}
+
+.user-photo-placeholder {
+  width: 104px;
+  height: 104px;
+  border-radius: 50%;
+  border: 2px solid $color-secondary;
+  box-shadow: 0px 3px 7.5px rgba(0, 0, 0, 0.45);
+  background-color: $color-secondary;
+  @include mixins.flex();
+  
+  span {
+    font-size: 40px;
+    font-weight: 700;
+    color: $color-white;
+  }
+}
+
+.greeting {
+  font-family: $font-family-primary;
+  font-size: 21px;
+  color: $color-white;
+  letter-spacing: 2.5%;
+  margin: 0;
+}
+
+.content {
+  padding: 20px;
+  margin-top: -30px;
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.search-section {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 30px;
+  max-width: 600px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.search-bar {
+  flex: 1;
+  min-width: 0;
+  @include mixins.flex(row, flex-start, center);
+  gap: 14px;
+  padding: 15px 18px;
+  background-color: $color-white;
+  border: 1px solid #EEEEEE;
+  border-radius: 8px;
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.16);
+  
+  .search-icon {
+    width: 25px;
+    height: 25px;
+    flex-shrink: 0;
+  }
+}
+
+.search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-family: $font-family-secondary;
+  font-size: 14px;
+  color: $color-primary;
+  
+  &::placeholder {
+    color: $color-primary;
+    opacity: 1;
+  }
+}
+
+.filter-button {
+  @include mixins.flex(row, center, center);
+  gap: 12px;
+  padding: 17px 20px;
+  background-color: $color-white;
+  border: 1px solid #EEEEEE;
+  border-radius: 8px;
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.16);
+  cursor: pointer;
+  transition: all 0.2s;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  span {
+    font-family: $font-family-secondary;
+    font-size: 16px;
+    color: $color-primary;
+  }
+}
+
+.filter-icon {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 24px;
+  
+  .line {
+    height: 3.5px;
+    background-color: $color-secondary;
+    border-radius: 2px;
+    
+    &.line-1 {
+      width: 23px;
+    }
+    
+    &.line-2 {
+      width: 15px;
+      margin-left: 4px;
+    }
+    
+    &.line-3 {
+      width: 6px;
+      margin-left: 9px;
+    }
+  }
+}
+
+.section-title {
+  font-family: $font-family-primary;
+  font-size: 18px;
+  font-weight: 700;
+  color: $color-primary;
+  margin: 0 0 20px 0;
+}
+
+.vehicles-list {
+  display: flex;
+  gap: 17px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}

@@ -1,0 +1,42 @@
+<div class="home-container">
+  <div class="header">
+    <div class="header-content">
+      <div class="user-info">
+        @if (user.photo) {
+          <img [src]="user.photo" alt="Foto do usuário" class="user-photo" />
+        } @else {
+          <div class="user-photo-placeholder">
+            <span>{{ user.name.charAt(0).toUpperCase() }}</span>
+          </div>
+        }
+        <p class="greeting">Olá, {{ user.name }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="search-section">
+      <div class="search-bar">
+        <img src="/assets/images/search-icon.svg" alt="Buscar" class="search-icon" />
+        <input type="text" placeholder="Buscar carro" class="search-input" />
+      </div>
+      
+      <button class="filter-button">
+        <div class="filter-icon">
+          <span class="line line-1"></span>
+          <span class="line line-2"></span>
+          <span class="line line-3"></span>
+        </div>
+        <span>Filtrar</span>
+      </button>
+    </div>
+
+    <h2 class="section-title">Últimas reservas</h2>
+
+    <div class="vehicles-list">
+      @for (vehicle of vehicles; track vehicle.id) {
+        <app-vehicle-card [vehicle]="vehicle" />
+      }
+    </div>
+  </div>
+</div>

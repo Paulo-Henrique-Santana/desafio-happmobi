@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
 import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
+    FormBuilder,
+    FormGroup,
+    ReactiveFormsModule,
+    Validators,
 } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { finalize } from 'rxjs';
 import { AuthService } from '../../../../core/services/auth/auth.service';
 import { ErrorMessageComponent } from '../../../../shared/components/error-message/error-message.component';
@@ -22,6 +22,7 @@ import { PrimaryButtonComponent } from '../../../../shared/components/primary-bu
 export class LoginPage {
   private authService = inject(AuthService);
   private fb = inject(FormBuilder);
+  private router = inject(Router);
 
   loginForm: FormGroup = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
@@ -42,6 +43,7 @@ export class LoginPage {
       .subscribe({
         next: () => {
           this.errorMessage = '';
+          this.router.navigate(['/home']);
         },
         error: (error) => {
           this.errorMessage = error.error.message;
