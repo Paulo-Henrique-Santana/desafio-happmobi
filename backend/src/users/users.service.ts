@@ -1,19 +1,29 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
+import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 
 @Injectable()
 export class UsersService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private cloudinary: CloudinaryService,
+  ) {}
 
-  async create(data: CreateUserDto) {
+  async create(data: CreateUserDto, photo?: Express.Multer.File) {
     const existingUser = await this.prisma.user.findUnique({
       where: { email: data.email },
     });
 
     if (existingUser) {
       throw new ConflictException('Email já está em uso');
+    }
+
+    let photoUrl: string | undefined;
+
+    if (photo) {
+      photoUrl = await this.cloudinary.uploadImage(photo);
     }
 
     const saltRounds = 10;
@@ -25,11 +35,13 @@ export class UsersService {
         name: data.name,
         email: data.email,
         password: hashedPassword,
+        photo: photoUrl,
       },
       select: {
         id: true,
         name: true,
         email: true,
+        photo: true,
       },
     });
   }

@@ -2,6 +2,7 @@ export interface CreateUserRequest {
   name: string;
   email: string;
   password: string;
+  photo?: File | null;
 }
 
 export interface User {

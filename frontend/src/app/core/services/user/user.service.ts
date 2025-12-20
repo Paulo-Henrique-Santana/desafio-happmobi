@@ -10,6 +10,16 @@ export class UserService extends BaseService {
   protected baseUrl = '/users';
 
   create(userData: CreateUserRequest): Observable<User> {
-    return this.post<User>(userData);
+    const formData = new FormData();
+
+    formData.append('name', userData.name);
+    formData.append('email', userData.email);
+    formData.append('password', userData.password);
+
+    if (userData.photo) {
+      formData.append('photo', userData.photo);
+    }
+
+    return this.post<User>(formData);
   }
 }
