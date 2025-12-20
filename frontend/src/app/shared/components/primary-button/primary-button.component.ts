@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-primary-button',
@@ -8,9 +8,9 @@ import { Component, Input } from '@angular/core';
   styleUrl: './primary-button.component.scss'
 })
 export class PrimaryButtonComponent {
-  @Input() text: string = 'Confirmar';
-  @Input() loadingText: string = 'Carregando...';
-  @Input() isLoading: boolean = false;
-  @Input() disabled: boolean = false;
-  @Input() type: 'submit' | 'button' = 'submit';
+  text = input<string>('Confirmar');
+  loadingText = input<string>('Carregando...');
+  isLoading = input<boolean>(false);
+  disabled = input<boolean>(false);
+  type = input<'submit' | 'button'>('submit');
 }

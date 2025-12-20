@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 interface Vehicle {
   id: number;
@@ -18,5 +18,5 @@ interface Vehicle {
   styleUrl: './vehicle-card.component.scss',
 })
 export class VehicleCardComponent {
-  @Input() vehicle!: Vehicle;
+  vehicle = input.required<Vehicle>();
 }

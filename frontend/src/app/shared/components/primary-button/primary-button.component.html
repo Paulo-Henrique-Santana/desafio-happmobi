@@ -1,6 +1,6 @@
 <button 
-  [type]="type" 
+  [type]="type()" 
   class="btn-primary" 
-  [disabled]="isLoading || disabled">
-  {{ isLoading ? loadingText : text }}
+  [disabled]="isLoading() || disabled()">
+  {{ isLoading() ? loadingText() : text() }}
 </button>
