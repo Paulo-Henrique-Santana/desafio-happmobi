@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Param,
   Patch,
   Post,
@@ -33,5 +34,10 @@ export class UsersController {
     @UploadedFile() photo?: Express.Multer.File,
   ) {
     return this.service.update(id, dto, photo);
+  }
+
+  @Delete(':id')
+  removeUser(@Param('id') id: string) {
+    return this.service.remove(id);
   }
 }

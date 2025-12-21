@@ -32,4 +32,8 @@ export class UserService extends BaseService {
 
     return this.patch<User>(formData, id);
   }
+
+  deleteUser(id: string): Observable<{ message: string }> {
+    return this.delete<{ message: string }>(id);
+  }
 }

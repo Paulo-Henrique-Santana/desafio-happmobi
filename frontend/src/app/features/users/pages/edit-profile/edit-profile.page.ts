@@ -10,9 +10,9 @@ import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import { AuthService } from '../../../../core/services/auth/auth.service';
 import { UserService } from '../../../../core/services/user/user.service';
+import { ButtonComponent } from '../../../../shared/components/button/button.component';
 import { ErrorMessageComponent } from '../../../../shared/components/error-message/error-message.component';
 import { NavigationComponent } from '../../../../shared/components/navigation/navigation.component';
-import { PrimaryButtonComponent } from '../../../../shared/components/primary-button/primary-button.component';
 import { UpdateUserRequest, User } from '../../../../shared/models/user.model';
 import { passwordMatchValidator } from '../../../../shared/validators/password-match.validator';
 
@@ -22,7 +22,7 @@ import { passwordMatchValidator } from '../../../../shared/validators/password-m
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    PrimaryButtonComponent,
+    ButtonComponent,
     ErrorMessageComponent,
     NavigationComponent,
   ],
@@ -108,8 +108,37 @@ export class EditProfilePage implements OnInit {
           this.router.navigate(['/home']);
         },
         error: (error) => {
-          this.errorMessage =
-            error.error?.message;
+          this.errorMessage = error.error?.message;
+        },
+      });
+  }
+
+  onDelete() {
+    if (!this.user) return;
+
+    const confirmed = confirm(
+      'Tem certeza que deseja remover seu perfil? Esta ação não pode ser desfeita.'
+    );
+
+    if (!confirmed) return;
+
+    this.deleteUser(this.user.id);
+  }
+
+  deleteUser(id: string) {
+    this.isLoading = true;
+    this.errorMessage = '';
+
+    this.userService
+      .deleteUser(id)
+      .pipe(finalize(() => (this.isLoading = false)))
+      .subscribe({
+        next: () => {
+          this.authService.logout();
+          this.router.navigate(['/login']);
+        },
+        error: (error) => {
+          this.errorMessage = error.error?.message || 'Erro ao remover perfil';
         },
       });
   }

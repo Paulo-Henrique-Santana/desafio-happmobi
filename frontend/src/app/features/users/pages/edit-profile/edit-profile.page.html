@@ -80,12 +80,20 @@
       }
 
       <div class="buttons">
-        <app-primary-button
-          [text]="'Salvar'"
-          [loadingText]="'Salvando...'"
+        <app-button
+          text="Salvar"
+          loadingText="Salvando..."
           [isLoading]="isLoading"
           [disabled]="editForm.invalid"
-          [type]="'submit'"
+          type="submit"
+        />
+        <app-button
+          text="Remover perfil"
+          loadingText="Removendo..."
+          [isLoading]="isLoading"
+          type="button"
+          variant="danger"
+          (clicked)="onDelete()"
         />
       </div>
     </form>

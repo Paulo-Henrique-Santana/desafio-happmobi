@@ -96,4 +96,16 @@ export class UsersService {
       },
     });
   }
+
+  async remove(id: string) {
+    const user = await this.prisma.user.findUnique({ where: { id } });
+
+    if (!user) {
+      throw new NotFoundException('Usuário não encontrado');
+    }
+
+    await this.prisma.user.delete({ where: { id } });
+
+    return { message: 'Usuário removido com sucesso' };
+  }
 }

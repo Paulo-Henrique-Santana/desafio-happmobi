@@ -8,14 +8,14 @@ import {
 import { Router, RouterLink } from '@angular/router';
 import { finalize } from 'rxjs';
 import { AuthService } from '../../../../core/services/auth/auth.service';
+import { ButtonComponent } from '../../../../shared/components/button/button.component';
 import { ErrorMessageComponent } from '../../../../shared/components/error-message/error-message.component';
 import { LogoHeaderComponent } from '../../../../shared/components/logo-header/logo-header.component';
-import { PrimaryButtonComponent } from '../../../../shared/components/primary-button/primary-button.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink, LogoHeaderComponent, PrimaryButtonComponent, ErrorMessageComponent],
+  imports: [ReactiveFormsModule, RouterLink, LogoHeaderComponent, ButtonComponent, ErrorMessageComponent],
   templateUrl: './login.page.html',
   styleUrl: './login.page.scss',
 })

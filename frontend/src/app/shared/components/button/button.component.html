@@ -1,0 +1,8 @@
+<button 
+  [type]="type()" 
+  [class.btn-primary]="variant() === 'primary'"
+  [class.btn-danger]="variant() === 'danger'"
+  [disabled]="isLoading() || disabled()"
+  (click)="clicked.emit()">
+  {{ isLoading() ? loadingText() : text() }}
+</button>
