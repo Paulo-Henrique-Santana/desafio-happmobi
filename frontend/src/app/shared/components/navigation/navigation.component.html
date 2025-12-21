@@ -1,0 +1,27 @@
+<nav class="mobile-nav">
+  @for (item of navItems; track item.route) {
+    <div 
+      class="nav-item" 
+      [class.active]="isActive(item.route)"
+      (click)="navigate(item.route)">
+      <img [src]="item.icon" [alt]="item.label" class="nav-icon" />
+      <span class="nav-label">{{ item.label }}</span>
+    </div>
+  }
+</nav>
+
+<nav class="desktop-nav">
+  <app-logo-header></app-logo-header>
+
+  <div class="nav-items">
+    @for (item of navItems; track item.route) {
+      <div 
+        class="nav-item" 
+        [class.active]="isActive(item.route)"
+        (click)="navigate(item.route)">
+        <img [src]="item.icon" [alt]="item.label" class="nav-icon" />
+        <span class="nav-label">{{ item.label }}</span>
+      </div>
+    }
+  </div>
+</nav>

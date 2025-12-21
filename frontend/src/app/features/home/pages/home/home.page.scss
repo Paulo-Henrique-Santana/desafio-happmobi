@@ -188,3 +188,14 @@
   overflow-x: auto;
   padding-bottom: 10px;
 }
+
+@media (min-width: 1024px) {
+  .home-container {
+    padding-bottom: 0;
+    padding-left: 280px;
+  }
+  
+  .content {
+    padding-bottom: 40px;
+  }
+}

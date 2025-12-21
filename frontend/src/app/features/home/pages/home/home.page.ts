@@ -1,13 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { AuthService } from '../../../../core/services/auth/auth.service';
+import { NavigationComponent } from '../../../../shared/components/navigation/navigation.component';
 import { VehicleCardComponent } from '../../../../shared/components/vehicle-card/vehicle-card.component';
 import { User } from '../../../../shared/models/user.model';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, VehicleCardComponent],
+  imports: [CommonModule, VehicleCardComponent, NavigationComponent],
   templateUrl: './home.page.html',
   styleUrl: './home.page.scss',
 })
