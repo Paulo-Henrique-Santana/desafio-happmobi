@@ -6,9 +6,11 @@ import {
   Patch,
   Post,
   UploadedFile,
+  UseGuards,
   UseInterceptors
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersService } from './users.service';
@@ -27,6 +29,7 @@ export class UsersController {
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)
   @UseInterceptors(FileInterceptor('photo'))
   updateUser(
     @Param('id') id: string,
@@ -37,6 +40,7 @@ export class UsersController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   removeUser(@Param('id') id: string) {
     return this.service.remove(id);
   }
