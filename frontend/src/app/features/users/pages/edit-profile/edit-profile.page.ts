@@ -1,4 +1,5 @@
-import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -7,36 +8,41 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
+import { AuthService } from '../../../../core/services/auth/auth.service';
 import { UserService } from '../../../../core/services/user/user.service';
 import { ErrorMessageComponent } from '../../../../shared/components/error-message/error-message.component';
-import { LogoHeaderComponent } from '../../../../shared/components/logo-header/logo-header.component';
+import { NavigationComponent } from '../../../../shared/components/navigation/navigation.component';
 import { PrimaryButtonComponent } from '../../../../shared/components/primary-button/primary-button.component';
-import { CreateUserRequest } from '../../../../shared/models/user.model';
+import { UpdateUserRequest, User } from '../../../../shared/models/user.model';
 import { passwordMatchValidator } from '../../../../shared/validators/password-match.validator';
 
 @Component({
-  selector: 'app-register',
+  selector: 'app-edit-profile',
   standalone: true,
   imports: [
+    CommonModule,
     ReactiveFormsModule,
-    LogoHeaderComponent,
     PrimaryButtonComponent,
     ErrorMessageComponent,
+    NavigationComponent,
   ],
-  templateUrl: './register.page.html',
-  styleUrl: './register.page.scss',
+  templateUrl: './edit-profile.page.html',
+  styleUrl: './edit-profile.page.scss',
 })
-export class RegisterPage {
+export class EditProfilePage implements OnInit {
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private userService = inject(UserService);
+  private authService = inject(AuthService);
 
-  registerForm: FormGroup = this.fb.group(
+  user: User | null = null;
+
+  editForm: FormGroup = this.fb.group(
     {
       name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]],
-      confirmPassword: ['', [Validators.required]],
+      password: [''],
+      confirmPassword: [''],
     },
     { validators: [passwordMatchValidator()] }
   );
@@ -45,6 +51,17 @@ export class RegisterPage {
   errorMessage = '';
   selectedFile: File | null = null;
   photoPreview: string | null = null;
+
+  ngOnInit() {
+    this.user = this.authService.getUser();
+    if (this.user) {
+      this.editForm.patchValue({
+        name: this.user.name,
+        email: this.user.email,
+      });
+      this.photoPreview = this.user.photo;
+    }
+  }
 
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
@@ -60,33 +77,40 @@ export class RegisterPage {
   }
 
   onSubmit() {
-    if (this.registerForm.invalid) return;
+    if (this.editForm.invalid || !this.user) return;
 
     this.isLoading = true;
     this.errorMessage = '';
 
-    const { confirmPassword, ...userData } = this.registerForm.value;
+    const updateData: UpdateUserRequest = {
+      name: this.editForm.value.name,
+      email: this.editForm.value.email,
+    };
 
-    userData.photo = this.selectedFile;
+    if (this.editForm.value.password) {
+      updateData.password = this.editForm.value.password;
+    }
 
-    this.createUser(userData);
+    if (this.selectedFile) {
+      updateData.photo = this.selectedFile;
+    }
+
+    this.updateUser(this.user.id, updateData);
   }
 
-  createUser(userData: CreateUserRequest) {
+  updateUser(id: string, updateData: UpdateUserRequest) {
     this.userService
-      .create(userData)
+      .update(id, updateData)
       .pipe(finalize(() => (this.isLoading = false)))
       .subscribe({
-        next: () => {
-          this.router.navigate(['/login']);
+        next: (updatedUser) => {
+          this.authService.updateUser(updatedUser);
+          this.router.navigate(['/home']);
         },
         error: (error) => {
-          this.errorMessage = error.error.message;
+          this.errorMessage =
+            error.error?.message;
         },
       });
-  }
-
-  goToLogin() {
-    this.router.navigate(['/login']);
   }
 }

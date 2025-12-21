@@ -1,0 +1,165 @@
+@use "variables" as *;
+@use "mixins";
+
+.edit-profile-container {
+  min-height: 100vh;
+  background-color: $color-white;
+  padding-bottom: 98px;
+}
+
+.header {
+  background-color: $color-primary;
+  padding: 50px 20px 30px;
+  @include mixins.flex();
+  gap: 20px;
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -389px;
+    right: 0;
+    height: 100%;
+    background-image: url('/assets/images/header-background.png');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.12;
+    z-index: 0;
+  }
+
+  .page-title,
+  .photo-section {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+.content {
+  padding: 30px 20px;
+  max-width: 600px;
+  margin: 0 auto;
+  margin-top: -30px;
+}
+
+.page-title {
+  font-family: $font-family-primary;
+  font-size: 24px;
+  font-weight: 700;
+  color: $color-white;
+  margin: 0;
+  text-align: center;
+}
+
+.edit-form {
+  @include mixins.flex();
+  gap: 20px;
+  max-width: 400px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.photo-section {
+  @include mixins.flex();
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.photo-container {
+  position: relative;
+}
+
+.photo-preview {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 3px solid $color-secondary;
+  object-fit: cover;
+  box-shadow: 0px 3px 7.5px rgba(0, 0, 0, 0.45);
+}
+
+.photo-placeholder {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 3px solid $color-secondary;
+  background-color: $color-secondary;
+  @include mixins.flex();
+  box-shadow: 0px 3px 7.5px rgba(0, 0, 0, 0.45);
+
+  span {
+    font-size: 48px;
+    font-weight: 700;
+    color: $color-white;
+  }
+}
+
+.change-photo-btn {
+  font-family: $font-family-secondary;
+  font-size: 14px;
+  color: $color-white;
+  text-decoration: underline;
+  cursor: pointer;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.file-input {
+  display: none;
+}
+
+.form-group {
+  @include mixins.flex();
+  gap: 8px;
+  width: 100%;
+
+  label {
+    font-family: $font-family-secondary;
+    font-size: 16px;
+    font-weight: 500;
+    color: $color-primary;
+  }
+}
+
+.buttons {
+  @include mixins.flex();
+  gap: 15px;
+  margin-top: 10px;
+  width: 100%;
+
+  app-primary-button {
+    width: 100%;
+  }
+}
+
+.logout-btn {
+  width: 100%;
+  padding: 15px;
+  background-color: transparent;
+  border: 1px solid $color-secondary;
+  border-radius: 8px;
+  font-family: $font-family-secondary;
+  font-size: 16px;
+  font-weight: 500;
+  color: $color-secondary;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: rgba($color-secondary, 0.05);
+  }
+}
+
+@media (min-width: 1024px) {
+  .edit-profile-container {
+    padding-bottom: 0;
+    padding-left: 280px;
+  }
+
+  .content {
+    padding-bottom: 40px;
+  }
+}

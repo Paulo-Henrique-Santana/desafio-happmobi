@@ -21,7 +21,7 @@ export class AuthService extends BaseService {
     );
   }
 
-  logout(): void {
+  logout() {
     localStorage.removeItem(this.TOKEN_KEY);
     localStorage.removeItem(this.USER_KEY);
   }
@@ -37,5 +37,9 @@ export class AuthService extends BaseService {
   getUser(): User | null {
     const user = localStorage.getItem(this.USER_KEY);
     return user ? JSON.parse(user) : null;
+  }
+
+  updateUser(user: User) {
+    localStorage.setItem(this.USER_KEY, JSON.stringify(user));
   }
 }

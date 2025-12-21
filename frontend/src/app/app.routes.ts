@@ -3,6 +3,7 @@ import { authGuard } from './core/guards/auth.guard';
 import { LoginPage } from './features/auth/pages/login/login.page';
 import { RegisterPage } from './features/auth/pages/register/register.page';
 import { HomePage } from './features/home/pages/home/home.page';
+import { EditProfilePage } from './features/users/pages/edit-profile/edit-profile.page';
 
 export const routes: Routes = [
   {
@@ -21,6 +22,11 @@ export const routes: Routes = [
   {
     path: 'home',
     loadComponent: () => HomePage,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'perfil',
+    loadComponent: () => EditProfilePage,
     canActivate: [authGuard]
   }
 ];

@@ -5,6 +5,13 @@ export interface CreateUserRequest {
   photo?: File | null;
 }
 
+export interface UpdateUserRequest {
+  name?: string;
+  email?: string;
+  password?: string;
+  photo?: File | null;
+}
+
 export interface User {
   id: string;
   name: string;

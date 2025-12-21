@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CreateUserRequest, User } from '../../../shared/models/user.model';
+import { CreateUserRequest, UpdateUserRequest, User } from '../../../shared/models/user.model';
 import { BaseService } from '../base/base-http.service';
 
 @Injectable({
@@ -21,5 +21,15 @@ export class UserService extends BaseService {
     }
 
     return this.post<User>(formData);
+  }
+
+  update(id: string, userData: UpdateUserRequest): Observable<User> {
+    const formData = new FormData();
+
+    Object.entries(userData).forEach(([key, value]) => {
+      if (value) formData.append(key, value);
+    });
+
+    return this.patch<User>(formData, id);
   }
 }

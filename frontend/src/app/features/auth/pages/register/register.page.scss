@@ -19,6 +19,14 @@
 
   width: 100%;
   max-width: 400px;
+
+  .input-field:not(:first-of-type) {
+    margin-top: 15px;
+  }
+
+  .input-field:last-of-type {
+    margin-bottom: 10px;
+  }
 }
 
 .photo-upload {
@@ -72,32 +80,6 @@
     font-size: 0.85rem;
     text-align: center;
     margin: 0;
-  }
-}
-
-.input-field {
-  border-radius: $border-radius-btn;
-  font-size: 1.2rem;
-  padding: 20px 25px;
-  width: 100%;
-  background-color: $color-white;
-  border: none;
-  box-shadow: 0px 3px 7.5px rgba(0, 0, 0, 0.05);
-
-  &:not(:first-of-type) {
-    margin-top: 15px;
-  }
-
-  &:last-of-type {
-    margin-bottom: 10px;
-  }
-
-  &::placeholder {
-    color: #afafaf;
-  }
-
-  &:focus {
-    outline: 2px solid rgba($color-secondary, 0.3);
   }
 }
 
