@@ -20,4 +20,5 @@ model User {
   name     String
   password String
   photo    String?
+  isAdmin  Boolean @default(false)
 }

@@ -43,6 +43,7 @@ export class UsersService {
         name: true,
         email: true,
         photo: true,
+        isAdmin: true,
       },
     });
   }
@@ -93,6 +94,7 @@ export class UsersService {
         name: true,
         email: true,
         photo: true,
+        isAdmin: true,
       },
     });
   }
