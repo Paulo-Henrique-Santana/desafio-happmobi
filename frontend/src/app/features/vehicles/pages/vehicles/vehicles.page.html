@@ -1,0 +1,49 @@
+<div class="vehicles-container">
+  <div class="header">
+    <h2 class="page-title">Veículos</h2>
+    <button class="add-button" (click)="goToCreateVehicle()" [disabled]="isLoading">
+      + Novo Veículo
+    </button>
+  </div>
+
+  <div class="content">
+    @if (errorMessage) {
+      <div class="error-banner">{{ errorMessage }}</div>
+    }
+
+    <div class="vehicles-list">
+      @if (isLoading) {
+        <p class="loading">Carregando veículos...</p>
+      } @else if (vehicles.length === 0) {
+        <p class="empty">Nenhum veículo cadastrado</p>
+      } @else {
+        @for (vehicle of vehicles; track vehicle.id) {
+          <div class="vehicle-card">
+            @if (vehicle.photo) {
+              <img [src]="vehicle.photo" [alt]="vehicle.name" class="vehicle-photo" />
+            } @else {
+              <div class="vehicle-photo-placeholder">🚗</div>
+            }
+            
+            <div class="vehicle-info">
+              <h3 class="vehicle-name">{{ vehicle.name }}</h3>
+              <p class="vehicle-detail"><strong>Carroceria:</strong> {{ vehicle.bodyType }}</p>
+              <p class="vehicle-detail"><strong>Motor:</strong> {{ vehicle.engineType }}</p>
+              <p class="vehicle-detail"><strong>Lugares:</strong> {{ vehicle.seats }}</p>
+            </div>
+            
+            <button 
+              class="delete-btn" 
+              (click)="deleteVehicle(vehicle.id)"
+              [disabled]="isLoading"
+            >
+              🗑️
+            </button>
+          </div>
+        }
+      }
+    </div>
+  </div>
+
+  <app-navigation />
+</div>

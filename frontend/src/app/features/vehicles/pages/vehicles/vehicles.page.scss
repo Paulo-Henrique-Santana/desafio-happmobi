@@ -1,0 +1,184 @@
+@use "variables" as *;
+@use "mixins";
+
+.vehicles-container {
+  min-height: 100vh;
+  background-color: $color-white;
+  padding-bottom: 98px;
+}
+
+.header {
+  background-color: $color-primary;
+  padding: 50px 20px 30px;
+  @include mixins.flex();
+  gap: 20px;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -389px;
+    right: 0;
+    height: 100%;
+    background-image: url('/assets/images/header-background.png');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.12;
+    z-index: 0;
+  }
+
+  .page-title,
+  .add-button {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+.page-title {
+  font-family: $font-family-primary;
+  font-size: 24px;
+  font-weight: 700;
+  color: $color-white;
+  margin: 0;
+  text-align: center;
+}
+
+.add-button {
+  background-color: $color-secondary;
+  color: $color-white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-family: $font-family-secondary;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0px 3px 7.5px rgba(0, 0, 0, 0.3);
+
+  &:hover:not(:disabled) {
+    background-color: darken($color-secondary, 5%);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.content {
+  padding: 30px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-top: -30px;
+}
+
+.error-banner {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-family: $font-family-secondary;
+}
+
+.vehicles-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.vehicle-card {
+  background: $color-white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0px 3px 7.5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  position: relative;
+}
+
+.vehicle-photo,
+.vehicle-photo-placeholder {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.vehicle-photo-placeholder {
+  background-color: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+}
+
+.vehicle-info {
+  flex: 1;
+}
+
+.vehicle-name {
+  font-family: $font-family-primary;
+  font-size: 18px;
+  font-weight: 700;
+  color: $color-primary;
+  margin: 0 0 10px 0;
+}
+
+.vehicle-detail {
+  font-family: $font-family-secondary;
+  font-size: 14px;
+  color: #666;
+  margin: 5px 0;
+}
+
+.delete-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(220, 53, 69, 0.9);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover:not(:disabled) {
+    background-color: rgba(220, 53, 69, 1);
+    transform: scale(1.1);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.loading,
+.empty {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+  font-family: $font-family-secondary;
+}
+
+@media (min-width: 1024px) {
+  .vehicles-container {
+    padding-bottom: 0;
+    padding-left: 280px;
+  }
+
+  .content {
+    padding-bottom: 40px;
+  }
+}

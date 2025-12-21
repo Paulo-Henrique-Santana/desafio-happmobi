@@ -1,0 +1,111 @@
+<div class="create-vehicle-container">
+  <div class="header">
+    <button class="back-button" (click)="goBack()">← Voltar</button>
+    <h2 class="page-title">Cadastrar Veículo</h2>
+  </div>
+
+  <div class="content">
+    <div class="form-card">
+      <form [formGroup]="vehicleForm" (ngSubmit)="onSubmit()" class="vehicle-form">
+        <div class="photo-upload">
+          <label for="photo-input" class="photo-label">
+            @if (photoPreview) {
+              <img [src]="photoPreview" alt="Preview" class="photo-preview" />
+            } @else {
+              <div class="photo-placeholder">
+                <span>📷</span>
+                <p>Adicionar foto</p>
+              </div>
+            }
+          </label>
+          <input
+            id="photo-input"
+            type="file"
+            accept="image/*"
+            (change)="onFileSelected($event)"
+            class="photo-input"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="name">Nome do Veículo</label>
+          <input
+            id="name"
+            type="text"
+            formControlName="name"
+            placeholder="Digite o nome"
+            class="input-field"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="bodyType">Tipo de Carroceria</label>
+          <select
+            id="bodyType"
+            formControlName="bodyType"
+            class="input-field"
+          >
+            <option value="">Selecione</option>
+            <option value="Sedan">Sedan</option>
+            <option value="Hatchback">Hatchback</option>
+            <option value="SUV">SUV</option>
+            <option value="Picape">Picape</option>
+            <option value="Van">Van</option>
+            <option value="Conversível">Conversível</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="engineType">Tipo de Motor</label>
+          <select
+            id="engineType"
+            formControlName="engineType"
+            class="input-field"
+          >
+            <option value="">Selecione</option>
+            <option value="Gasolina">Gasolina</option>
+            <option value="Diesel">Diesel</option>
+            <option value="Flex">Flex</option>
+            <option value="Elétrico">Elétrico</option>
+            <option value="Híbrido">Híbrido</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="seats">Quantidade de Lugares</label>
+          <input
+            id="seats"
+            type="number"
+            formControlName="seats"
+            placeholder="Ex: 5"
+            class="input-field"
+            min="1"
+          />
+        </div>
+
+        @if (errorMessage) {
+          <app-error-message [message]="errorMessage" />
+        }
+
+        <div class="buttons">
+          <app-button
+            [text]="'Cadastrar'"
+            [loadingText]="'Cadastrando...'"
+            [isLoading]="isLoading"
+            [disabled]="vehicleForm.invalid"
+            [type]="'submit'"
+          />
+          <app-button
+            [text]="'Cancelar'"
+            [type]="'button'"
+            [variant]="'danger'"
+            (clicked)="goBack()"
+            [disabled]="isLoading"
+          />
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <app-navigation />
+</div>

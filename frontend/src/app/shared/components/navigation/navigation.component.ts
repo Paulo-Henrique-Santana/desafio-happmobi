@@ -1,12 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../core/services/auth/auth.service';
 import { LogoHeaderComponent } from '../logo-header/logo-header.component';
 
 interface NavItem {
   route: string;
   icon: string;
   label: string;
+  adminOnly?: boolean;
 }
 
 @Component({
@@ -18,18 +20,31 @@ interface NavItem {
 })
 export class NavigationComponent implements OnInit {
   private router = inject(Router);
+  private authService = inject(AuthService);
 
   currentRoute = '/home';
+  navItems: NavItem[] = [];
 
-  navItems: NavItem[] = [
+  allNavItems: NavItem[] = [
     { route: '/home', icon: '/assets/images/nav-icons/home-icon.svg', label: 'INÍCIO' },
     { route: '/agendamentos', icon: '/assets/images/nav-icons/appointments-icon.svg', label: 'AGENDAMENTOS' },
-    { route: '/central', icon: '/assets/images/nav-icons/central-icon.svg', label: 'CENTRAL' },
+    { route: '/veiculos', icon: '/assets/images/nav-icons/vehicle-icon.svg', label: 'VEÍCULOS', adminOnly: true },
     { route: '/perfil', icon: '/assets/images/nav-icons/profile-icon.svg', label: 'PERFIL' },
   ];
 
   ngOnInit() {
     this.currentRoute = this.router.url;
+    this.filterNavItems();
+  }
+
+  filterNavItems() {
+    const user = this.authService.getUser();
+    this.navItems = this.allNavItems.filter(item => {
+      if (item.adminOnly) {
+        return user?.isAdmin === true;
+      }
+      return true;
+    });
   }
 
   isActive(route: string): boolean {
