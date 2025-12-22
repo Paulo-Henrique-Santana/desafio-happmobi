@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
-import { AuthService } from '../../../../core/services/auth/auth.service';
 import { VehicleService } from '../../../../core/services/vehicle/vehicle.service';
 import { NavigationComponent } from '../../../../shared/components/navigation/navigation.component';
 import { Vehicle } from '../../../../shared/models/vehicle.model';
@@ -19,7 +18,6 @@ import { Vehicle } from '../../../../shared/models/vehicle.model';
 })
 export class VehiclesPage implements OnInit {
   private vehicleService = inject(VehicleService);
-  private authService = inject(AuthService);
   private router = inject(Router);
 
   vehicles: Vehicle[] = [];
@@ -27,12 +25,6 @@ export class VehiclesPage implements OnInit {
   errorMessage = '';
 
   ngOnInit() {
-    const user = this.authService.getUser();
-    if (!user?.isAdmin) {
-      this.router.navigate(['/home']);
-      return;
-    }
-    
     this.loadVehicles();
   }
 

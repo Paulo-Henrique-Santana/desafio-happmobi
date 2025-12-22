@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { adminGuard } from './core/guards/admin.guard';
 import { authGuard } from './core/guards/auth.guard';
 import { guestGuard } from './core/guards/guest.guard';
 
@@ -38,26 +39,12 @@ export const routes: Routes = [
   },
   {
     path: 'veiculos',
-    loadComponent: () =>
-      import('./features/vehicles/pages/vehicles/vehicles.page').then(
-        (m) => m.VehiclesPage
-      ),
-    canActivate: [authGuard],
+    canActivate: [authGuard, adminGuard],
+    loadChildren: () =>
+      import('./features/vehicles/vehicle.routes').then((m) => m.vehicleRoutes),
   },
   {
-    path: 'veiculos/novo',
-    loadComponent: () =>
-      import('./features/vehicles/pages/vehicle-form/create-vehicle.page').then(
-        (m) => m.VehicleFormPage
-      ),
-    canActivate: [authGuard],
-  },
-  {
-    path: 'veiculos/:id',
-    loadComponent: () =>
-      import('./features/vehicles/pages/vehicle-form/create-vehicle.page').then(
-        (m) => m.VehicleFormPage
-      ),
-    canActivate: [authGuard],
+    path: '**',
+    redirectTo: 'login',
   },
 ];
