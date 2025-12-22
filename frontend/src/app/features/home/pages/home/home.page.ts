@@ -131,7 +131,6 @@ export class HomePage implements OnInit {
           this.searchResults = vehicles;
         },
         error: (error) => {
-          console.error('Erro ao buscar veículos:', error);
           this.searchResults = [];
         },
       });
@@ -167,7 +166,6 @@ export class HomePage implements OnInit {
           this.searchResults = vehicles;
         },
         error: (error) => {
-          console.error('Erro ao buscar veículos:', error);
           this.searchResults = [];
         },
       });
