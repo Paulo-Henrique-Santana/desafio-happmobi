@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, input, output } from '@angular/core';
+import { Component, effect, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { VEHICLE_BODY_TYPES, VEHICLE_ENGINE_TYPES, VEHICLE_SEATS_OPTIONS } from '../../constants/vehicle-options';
 
@@ -18,12 +18,34 @@ export interface VehicleFilters {
 })
 export class FilterModalComponent {
   isOpen = input<boolean>(false);
+  activeFilters = input<VehicleFilters | null>(null);
   closeModal = output<void>();
   applyFilters = output<VehicleFilters>();
 
   selectedBodyTypes: string[] = [];
   selectedEngineTypes: string[] = [];
   selectedSeats: number[] = [];
+
+  constructor() {
+    effect(() => {
+      if (this.isOpen()) {
+        this.loadActiveFilters();
+      }
+    });
+  }
+
+  private loadActiveFilters() {
+    const filters = this.activeFilters();
+    if (filters) {
+      this.selectedBodyTypes = [...filters.bodyTypes];
+      this.selectedEngineTypes = [...filters.engineTypes];
+      this.selectedSeats = [...filters.seats];
+    } else {
+      this.selectedBodyTypes = [];
+      this.selectedEngineTypes = [];
+      this.selectedSeats = [];
+    }
+  }
 
   isBodyTypesExpanded = true;
   isEngineTypesExpanded = true;
@@ -100,6 +122,7 @@ export class FilterModalComponent {
   }
 
   close() {
+    this.loadActiveFilters();
     this.closeModal.emit();
   }
 

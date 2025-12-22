@@ -1,18 +1,20 @@
 import {
-    Body,
-    Controller,
-    Delete,
-    Get,
-    Param,
-    Patch,
-    Post,
-    UploadedFile,
-    UseGuards,
-    UseInterceptors,
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+  UploadedFile,
+  UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AdminGuard } from '../auth/guards/admin.guard';
 import { CreateVehicleDto } from './dto/create-vehicle.dto';
+import { FilterVehicleDto } from './dto/filter-vehicle.dto';
 import { UpdateVehicleDto } from './dto/update-vehicle.dto';
 import { VehiclesService } from './vehicles.service';
 
@@ -31,8 +33,15 @@ export class VehiclesController {
   }
 
   @Get()
-  findAll() {
-    return this.service.findAll();
+  findAll(@Query() query: any) {
+    const filters: FilterVehicleDto = {
+      name: query.name,
+      bodyTypes: query.bodyTypes ? query.bodyTypes.split(',') : undefined,
+      engineTypes: query.engineTypes ? query.engineTypes.split(',') : undefined,
+      seats: query.seats ? query.seats.split(',').map(Number) : undefined,
+    };
+    
+    return this.service.findAll(filters);
   }
 
   @Get(':id')

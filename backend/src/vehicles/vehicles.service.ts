@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateVehicleDto } from './dto/create-vehicle.dto';
+import { FilterVehicleDto } from './dto/filter-vehicle.dto';
 import { UpdateVehicleDto } from './dto/update-vehicle.dto';
 
 @Injectable()
@@ -29,8 +30,36 @@ export class VehiclesService {
     });
   }
 
-  async findAll() {
+  async findAll(filters?: FilterVehicleDto) {
+    const where: any = {};
+
+    if (filters?.name) {
+      where.name = {
+        contains: filters.name,
+        mode: 'insensitive',
+      };
+    }
+
+    if (filters?.bodyTypes && filters.bodyTypes.length > 0) {
+      where.bodyType = {
+        in: filters.bodyTypes,
+      };
+    }
+
+    if (filters?.engineTypes && filters.engineTypes.length > 0) {
+      where.engineType = {
+        in: filters.engineTypes,
+      };
+    }
+
+    if (filters?.seats && filters.seats.length > 0) {
+      where.seats = {
+        in: filters.seats,
+      };
+    }
+
     return this.prisma.vehicle.findMany({
+      where,
       orderBy: { createdAt: 'desc' },
     });
   }

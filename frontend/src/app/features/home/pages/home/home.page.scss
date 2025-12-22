@@ -148,30 +148,8 @@
 }
 
 .filter-icon {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
   width: 24px;
-  
-  .line {
-    height: 3.5px;
-    background-color: $color-secondary;
-    border-radius: 2px;
-    
-    &.line-1 {
-      width: 23px;
-    }
-    
-    &.line-2 {
-      width: 15px;
-      margin-left: 4px;
-    }
-    
-    &.line-3 {
-      width: 6px;
-      margin-left: 9px;
-    }
-  }
+  height: 19px;
 }
 
 .section-title {

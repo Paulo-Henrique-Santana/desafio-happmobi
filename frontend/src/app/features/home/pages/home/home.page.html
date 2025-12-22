@@ -28,11 +28,7 @@
       </div>
       
       <button class="filter-button" (click)="openFilterModal()">
-        <div class="filter-icon">
-          <span class="line line-1"></span>
-          <span class="line line-2"></span>
-          <span class="line line-3"></span>
-        </div>
+        <img src="/assets/images/filter-icon.svg" alt="Filtrar" class="filter-icon" />
         <span>Filtrar</span>
       </button>
     </div>
@@ -52,6 +48,7 @@
 
   <app-filter-modal
     [isOpen]="isFilterModalOpen"
+    [activeFilters]="activeFilters"
     (closeModal)="closeFilterModal()"
     (applyFilters)="applyFilters($event)"
   />

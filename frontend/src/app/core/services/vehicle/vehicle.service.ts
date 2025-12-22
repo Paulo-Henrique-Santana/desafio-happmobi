@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { VehicleFilters } from '../../../shared/components/filter-modal/filter-modal.component';
 import { CreateVehicleRequest, UpdateVehicleRequest, Vehicle } from '../../../shared/models/vehicle.model';
 import { BaseService } from '../base/base-http.service';
 
@@ -9,8 +10,26 @@ import { BaseService } from '../base/base-http.service';
 export class VehicleService extends BaseService {
   protected baseUrl = '/vehicles';
 
-  getAll(): Observable<Vehicle[]> {
-    return this.get<Vehicle[]>();
+  getAll(filters?: { name?: string } & VehicleFilters): Observable<Vehicle[]> {
+    const params: Record<string, string> = {};
+
+    if (filters?.name) {
+      params['name'] = filters.name;
+    }
+
+    if (filters?.bodyTypes && filters.bodyTypes.length > 0) {
+      params['bodyTypes'] = filters.bodyTypes.join(',');
+    }
+
+    if (filters?.engineTypes && filters.engineTypes.length > 0) {
+      params['engineTypes'] = filters.engineTypes.join(',');
+    }
+
+    if (filters?.seats && filters.seats.length > 0) {
+      params['seats'] = filters.seats.join(',');
+    }
+
+    return this.get<Vehicle[]>('', params);
   }
 
   getOne(id: string): Observable<Vehicle> {

@@ -50,11 +50,19 @@ export class HomePage implements OnInit {
   ];
 
   get vehicles() {
-    return this.searchQuery ? this.searchResults : this.lastReservations;
+    return this.searchQuery || this.hasActiveFilters ? this.searchResults : this.lastReservations;
   }
 
   get showLastReservations() {
-    return !this.searchQuery;
+    return !this.searchQuery && !this.hasActiveFilters;
+  }
+
+  get hasActiveFilters() {
+    return this.activeFilters && (
+      this.activeFilters.bodyTypes.length > 0 ||
+      this.activeFilters.engineTypes.length > 0 ||
+      this.activeFilters.seats.length > 0
+    );
   }
 
   ngOnInit() {
@@ -68,8 +76,9 @@ export class HomePage implements OnInit {
         distinctUntilChanged()
       )
       .subscribe(query => {
-        if (query) {
-          this.searchVehicles(query);
+        const trimmedQuery = query.trim();
+        if (trimmedQuery) {
+          this.searchVehicles(trimmedQuery);
         } else {
           this.searchResults = [];
         }
@@ -85,15 +94,20 @@ export class HomePage implements OnInit {
     this.isSearching = true;
     const normalizedQuery = query.toLowerCase().replace(/\s+/g, ' ').trim();
     
+    const filters: any = { name: normalizedQuery };
+    
+    if (this.hasActiveFilters && this.activeFilters) {
+      filters.bodyTypes = this.activeFilters.bodyTypes;
+      filters.engineTypes = this.activeFilters.engineTypes;
+      filters.seats = this.activeFilters.seats;
+    }
+    
     this.vehicleService
-      .getAll()
+      .getAll(filters)
       .pipe(finalize(() => (this.isSearching = false)))
       .subscribe({
         next: (vehicles) => {
-          this.searchResults = vehicles.filter(vehicle => {
-            const normalizedName = vehicle.name.toLowerCase().replace(/\s+/g, ' ').trim();
-            return normalizedName.includes(normalizedQuery);
-          });
+          this.searchResults = vehicles;
         },
         error: (error) => {
           console.error('Erro ao buscar veículos:', error);
@@ -112,5 +126,29 @@ export class HomePage implements OnInit {
 
   applyFilters(filters: VehicleFilters) {
     this.activeFilters = filters;
+    this.isSearching = true;
+    
+    const apiFilters: any = {
+      bodyTypes: filters.bodyTypes,
+      engineTypes: filters.engineTypes,
+      seats: filters.seats,
+    };
+
+    if (this.searchQuery.trim()) {
+      apiFilters.name = this.searchQuery.trim();
+    }
+    
+    this.vehicleService
+      .getAll(apiFilters)
+      .pipe(finalize(() => (this.isSearching = false)))
+      .subscribe({
+        next: (vehicles) => {
+          this.searchResults = vehicles;
+        },
+        error: (error) => {
+          console.error('Erro ao buscar veículos:', error);
+          this.searchResults = [];
+        },
+      });
   }
 }
