@@ -73,4 +73,8 @@ export class VehiclesPage implements OnInit {
   goToCreateVehicle() {
     this.router.navigate(['/veiculos/novo']);
   }
+
+  editVehicle(id: string) {
+    this.router.navigate(['/veiculos', id]);
+  }
 }

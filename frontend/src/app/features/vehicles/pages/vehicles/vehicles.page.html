@@ -32,13 +32,22 @@
               <p class="vehicle-detail"><strong>Lugares:</strong> {{ vehicle.seats }}</p>
             </div>
             
-            <button 
-              class="delete-btn" 
-              (click)="deleteVehicle(vehicle.id)"
-              [disabled]="isLoading"
-            >
-              🗑️
-            </button>
+            <div class="vehicle-actions">
+              <button 
+                class="edit-btn" 
+                (click)="editVehicle(vehicle.id)"
+                [disabled]="isLoading"
+              >
+                ✏️
+              </button>
+              <button 
+                class="delete-btn" 
+                (click)="deleteVehicle(vehicle.id)"
+                [disabled]="isLoading"
+              >
+                🗑️
+              </button>
+            </div>
           </div>
         }
       }
