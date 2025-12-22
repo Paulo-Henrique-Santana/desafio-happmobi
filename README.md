@@ -99,7 +99,15 @@ npm start
 
 A aplicação estará disponível em `http://localhost:4200`
 
-## 📚 Funcionalidades
+## � Documentação da API
+
+A API REST está completamente documentada com **Swagger/OpenAPI**. Após iniciar o servidor backend, acesse a documentação interativa em:
+
+```
+http://localhost:3000/docs
+```
+
+## �📚 Funcionalidades
 
 ### Usuários
 - ✅ Cadastro e autenticação
