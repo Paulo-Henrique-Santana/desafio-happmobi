@@ -27,7 +27,6 @@ export class NavigationComponent implements OnInit {
 
   allNavItems: NavItem[] = [
     { route: '/home', icon: '/assets/images/nav-icons/home-icon.svg', label: 'INÍCIO' },
-    { route: '/agendamentos', icon: '/assets/images/nav-icons/appointments-icon.svg', label: 'AGENDAMENTOS' },
     { route: '/veiculos', icon: '/assets/images/nav-icons/vehicle-icon.svg', label: 'VEÍCULOS', adminOnly: true },
     { route: '/perfil', icon: '/assets/images/nav-icons/profile-icon.svg', label: 'PERFIL' },
   ];
