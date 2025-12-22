@@ -86,6 +86,10 @@ export class UsersService {
       updatedData.password = hashedPassword;
     }
 
+    if (photoUrl) {
+      updatedData.photo = photoUrl;
+    }
+
     return this.prisma.user.update({
       where: { id },
       data: updatedData,
