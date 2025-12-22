@@ -147,6 +147,20 @@
             font-weight: 600;
           }
         }
+
+        &.logout-item {
+          margin-top: auto;
+          border-top: 1px solid #EEEEEE;
+          padding-top: 20px;
+
+          &:hover {
+            background-color: rgba($color-secondary, 0.05);
+
+            .nav-label {
+              color: $color-secondary;
+            }
+          }
+        }
       }
     }
   }

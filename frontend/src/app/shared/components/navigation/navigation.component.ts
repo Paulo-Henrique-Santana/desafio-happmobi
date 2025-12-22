@@ -54,4 +54,9 @@ export class NavigationComponent implements OnInit {
     this.currentRoute = route;
     this.router.navigate([route]);
   }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+  }
 }
