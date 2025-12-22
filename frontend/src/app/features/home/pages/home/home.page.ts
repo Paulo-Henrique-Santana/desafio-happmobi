@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, map, Observable, Subject, switchMap } from 'rxjs';
 import { debounceTime, distinctUntilChanged, finalize } from 'rxjs/operators';
 import { AuthService } from '../../../../core/services/auth/auth.service';
 import { ReservationService } from '../../../../core/services/reservation/reservation.service';
@@ -26,6 +26,7 @@ export class HomePage implements OnInit {
   private vehicleService = inject(VehicleService);
   private reservationService = inject(ReservationService);
   private searchSubject = new Subject<string>();
+  private refreshTrigger$ = new BehaviorSubject<void>(undefined);
 
   user: User = this.authService.getUser()!;
   isFilterModalOpen = false;
@@ -35,11 +36,15 @@ export class HomePage implements OnInit {
   searchQuery = '';
   isSearching = false;
   searchResults: Vehicle[] = [];
-  lastReservations: Vehicle[] = [];
-  userReservations: Map<string, string> = new Map();
+  
+  lastReservations$!: Observable<Vehicle[]>;
+  userReservations$!: Observable<Map<string, string>>;
 
-  get vehicles() {
-    return this.searchQuery || this.hasActiveFilters ? this.searchResults : this.lastReservations;
+  get vehicles$(): Observable<Vehicle[]> {
+    if (this.searchQuery || this.hasActiveFilters) {
+      return new BehaviorSubject(this.searchResults).asObservable();
+    }
+    return this.lastReservations$;
   }
 
   get showLastReservations() {
@@ -55,30 +60,34 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
+    this.setupReservations();
     this.setupSearchSubscription();
-    this.loadUserReservations();
   }
 
-  loadUserReservations() {
-    this.reservationService.getAll().subscribe({
-      next: (reservations) => {
-        this.userReservations.clear();
-        
+  setupReservations() {
+    const reservations$ = this.refreshTrigger$.pipe(
+      switchMap(() => this.reservationService.getAll())
+    );
+
+    this.userReservations$ = reservations$.pipe(
+      map(reservations => {
+        const userReservationsMap = new Map<string, string>();
         reservations.forEach(r => {
           if (r.vehicle && r.status === 'active') {
-            this.userReservations.set(r.vehicle.id, r.id);
+            userReservationsMap.set(r.vehicle.id, r.id);
           }
         });
+        return userReservationsMap;
+      })
+    );
 
-        this.lastReservations = reservations
+    this.lastReservations$ = reservations$.pipe(
+      map(reservations => 
+        reservations
           .filter(r => r.vehicle)
-          .map(r => r.vehicle!);
-      },
-      error: (error) => {
-        console.error('Erro ao buscar reservas:', error);
-        this.lastReservations = [];
-      },
-    });
+          .map(r => r.vehicle!)
+      )
+    );
   }
 
   setupSearchSubscription() {
@@ -175,25 +184,25 @@ export class HomePage implements OnInit {
   }
 
   onReservationSuccess() {
-    this.loadUserReservations();
+    this.refreshTrigger$.next();
     if (this.searchQuery || this.hasActiveFilters) {
       this.applyFilters(this.activeFilters || { bodyTypes: [], engineTypes: [], seats: [] });
     }
   }
 
-  isVehicleReserved(vehicleId: string): boolean {
-    return this.userReservations.has(vehicleId);
+  isVehicleReserved(vehicleId: string, userReservations: Map<string, string> | null): boolean {
+    return userReservations?.has(vehicleId) || false;
   }
 
-  getReservationId(vehicleId: string): string | null {
-    return this.userReservations.get(vehicleId) || null;
+  getReservationId(vehicleId: string, userReservations: Map<string, string> | null): string | null {
+    return userReservations?.get(vehicleId) || null;
   }
 
   onCancelReservation(reservationId: string) {
     if (confirm('Deseja realmente liberar este veículo?')) {
       this.reservationService.cancel(reservationId).subscribe({
         next: () => {
-          this.loadUserReservations();
+          this.refreshTrigger$.next();
         },
       });
     }

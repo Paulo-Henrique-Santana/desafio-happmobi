@@ -14,10 +14,12 @@
     <div class="vehicles-list">
       @if (isLoading) {
         <p class="loading">Carregando veículos...</p>
-      } @else if (vehicles.length === 0) {
-        <p class="empty">Nenhum veículo cadastrado</p>
       } @else {
-        @for (vehicle of vehicles; track vehicle.id) {
+        @if (vehicles$ | async; as vehicles) {
+          @if (vehicles.length === 0) {
+            <p class="empty">Nenhum veículo cadastrado</p>
+          } @else {
+            @for (vehicle of vehicles; track vehicle.id) {
           <div class="vehicle-card">
             @if (vehicle.photo) {
               <img [src]="vehicle.photo" [alt]="vehicle.name" class="vehicle-photo" />
@@ -49,6 +51,8 @@
               </button>
             </div>
           </div>
+            }
+          }
         }
       }
     </div>
