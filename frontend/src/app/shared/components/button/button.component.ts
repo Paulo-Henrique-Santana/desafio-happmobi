@@ -13,6 +13,6 @@ export class ButtonComponent {
   isLoading = input<boolean>(false);
   disabled = input<boolean>(false);
   type = input<'submit' | 'button'>('submit');
-  variant = input<'primary' | 'danger'>('primary');
+  variant = input<'primary' | 'secondary' | 'danger'>('primary');
   clicked = output<void>();
 }

@@ -41,7 +41,7 @@
 
     <div class="vehicles-list">
       @for (vehicle of vehicles; track vehicle.id) {
-        <app-vehicle-card [vehicle]="vehicle" />
+        <app-vehicle-card [vehicle]="vehicle" (reserveVehicle)="openReservationModal($event)" />
       }
     </div>
   </div>
@@ -51,6 +51,13 @@
     [activeFilters]="activeFilters"
     (closeModal)="closeFilterModal()"
     (applyFilters)="applyFilters($event)"
+  />
+
+  <app-reservation-modal
+    [isOpen]="isReservationModalOpen"
+    [vehicle]="selectedVehicle"
+    (closeModal)="closeReservationModal()"
+    (reservationSuccess)="onReservationSuccess()"
   />
 
   <app-navigation />

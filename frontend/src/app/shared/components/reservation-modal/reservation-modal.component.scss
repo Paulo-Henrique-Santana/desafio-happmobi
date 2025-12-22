@@ -1,0 +1,130 @@
+@use "variables" as *;
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 1000;
+  padding: 1rem;
+
+  &.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+}
+
+.modal-content {
+  background: white;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+
+  h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0;
+  }
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #6b7280;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #f3f4f6;
+  }
+}
+
+.vehicle-preview {
+  display: flex;
+  gap: 1rem;
+  padding: 1.5rem;
+  background-color: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+
+  .vehicle-image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  .vehicle-info {
+    flex: 1;
+
+    h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin: 0 0 0.5rem 0;
+    }
+
+    p {
+      font-size: 0.875rem;
+      color: #6b7280;
+      margin: 0;
+    }
+  }
+}
+
+.reservation-form {
+  padding: 1.5rem;
+}
+
+.confirmation-text {
+  font-size: 1rem;
+  color: #374151;
+  margin: 0 0 1.5rem 0;
+  text-align: center;
+}
+
+.error-message {
+  padding: 0.75rem;
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  color: #dc2626;
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+
+  app-button {
+    flex: 1;
+  }
+}

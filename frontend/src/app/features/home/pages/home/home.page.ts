@@ -4,9 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, finalize } from 'rxjs/operators';
 import { AuthService } from '../../../../core/services/auth/auth.service';
+import { ReservationService } from '../../../../core/services/reservation/reservation.service';
 import { VehicleService } from '../../../../core/services/vehicle/vehicle.service';
 import { FilterModalComponent, VehicleFilters } from '../../../../shared/components/filter-modal/filter-modal.component';
 import { NavigationComponent } from '../../../../shared/components/navigation/navigation.component';
+import { ReservationModalComponent } from '../../../../shared/components/reservation-modal/reservation-modal.component';
 import { VehicleCardComponent } from '../../../../shared/components/vehicle-card/vehicle-card.component';
 import { User } from '../../../../shared/models/user.model';
 import { Vehicle } from '../../../../shared/models/vehicle.model';
@@ -14,17 +16,20 @@ import { Vehicle } from '../../../../shared/models/vehicle.model';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, FormsModule, VehicleCardComponent, NavigationComponent, FilterModalComponent],
+  imports: [CommonModule, FormsModule, VehicleCardComponent, NavigationComponent, FilterModalComponent, ReservationModalComponent],
   templateUrl: './home.page.html',
   styleUrl: './home.page.scss',
 })
 export class HomePage implements OnInit {
   private authService = inject(AuthService);
   private vehicleService = inject(VehicleService);
+  private reservationService = inject(ReservationService);
   private searchSubject = new Subject<string>();
 
   user: User = this.authService.getUser()!;
   isFilterModalOpen = false;
+  isReservationModalOpen = false;
+  selectedVehicle: Vehicle | null = null;
   activeFilters: VehicleFilters | null = null;
   searchQuery = '';
   isSearching = false;
@@ -150,5 +155,21 @@ export class HomePage implements OnInit {
           this.searchResults = [];
         },
       });
+  }
+
+  openReservationModal(vehicle: Vehicle) {
+    this.selectedVehicle = vehicle;
+    this.isReservationModalOpen = true;
+  }
+
+  closeReservationModal() {
+    this.isReservationModalOpen = false;
+    this.selectedVehicle = null;
+  }
+
+  onReservationSuccess() {
+    if (this.searchQuery || this.hasActiveFilters) {
+      this.applyFilters(this.activeFilters || { bodyTypes: [], engineTypes: [], seats: [] });
+    }
   }
 }

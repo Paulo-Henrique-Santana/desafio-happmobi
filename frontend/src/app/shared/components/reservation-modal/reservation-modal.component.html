@@ -1,0 +1,46 @@
+<div class="modal-overlay" [class.open]="isOpen()" (click)="onClose()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Reservar Veículo</h2>
+      <button class="close-button" (click)="onClose()">×</button>
+    </div>
+
+    @if (vehicle()) {
+      <div class="vehicle-preview">
+        <img [src]="vehicle()!.photo" [alt]="vehicle()!.name" class="vehicle-image" />
+        <div class="vehicle-info">
+          <h3>{{ vehicle()!.name }}</h3>
+          <p>{{ vehicle()!.bodyType }} • {{ vehicle()!.engineType }} • {{ vehicle()!.seats }} lugares</p>
+        </div>
+      </div>
+    }
+
+    <form (ngSubmit)="onSubmit()" class="reservation-form">
+      <p class="confirmation-text">
+        Deseja confirmar a reserva deste veículo?
+      </p>
+
+      @if (errorMessage) {
+        <div class="error-message">
+          {{ errorMessage }}
+        </div>
+      }
+
+      <div class="modal-actions">
+        <app-button
+          [text]="'Cancelar'"
+          [type]="'button'"
+          [variant]="'danger'"
+          [disabled]="isSubmitting"
+          (clicked)="onClose()"
+        />
+        <app-button
+          [text]="'Confirmar Reserva'"
+          [loadingText]="'Reservando...'"
+          [type]="'submit'"
+          [isLoading]="isSubmitting"
+        />
+      </div>
+    </form>
+  </div>
+</div>

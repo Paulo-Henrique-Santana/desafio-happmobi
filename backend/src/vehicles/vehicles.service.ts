@@ -60,7 +60,6 @@ export class VehiclesService {
 
     return this.prisma.vehicle.findMany({
       where,
-      orderBy: { createdAt: 'desc' },
     });
   }
 

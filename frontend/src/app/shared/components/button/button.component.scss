@@ -51,3 +51,29 @@
     background-color: rgba(#dc3545, 0.05);
   }
 }
+
+.btn-secondary {
+  font-size: 16px;
+  font-weight: 500;
+  font-family: $font-family-primary;
+
+  width: 100%;
+  border: 1px solid $color-secondary;
+  border-radius: $border-radius-btn;
+  padding: 12px 0;
+
+  background-color: transparent;
+  color: $color-secondary;
+  box-shadow: none;
+
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  &:hover:not(:disabled) {
+    background-color: rgba($color-secondary, 0.05);
+  }
+}
