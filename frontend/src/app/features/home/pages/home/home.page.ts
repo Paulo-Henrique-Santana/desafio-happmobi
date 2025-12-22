@@ -8,6 +8,7 @@ import { ReservationService } from '../../../../core/services/reservation/reserv
 import { VehicleService } from '../../../../core/services/vehicle/vehicle.service';
 import { FilterModalComponent, VehicleFilters } from '../../../../shared/components/filter-modal/filter-modal.component';
 import { NavigationComponent } from '../../../../shared/components/navigation/navigation.component';
+import { PhotoUploadComponent } from '../../../../shared/components/photo-upload/photo-upload.component';
 import { ReservationModalComponent } from '../../../../shared/components/reservation-modal/reservation-modal.component';
 import { VehicleCardComponent } from '../../../../shared/components/vehicle-card/vehicle-card.component';
 import { User } from '../../../../shared/models/user.model';
@@ -16,7 +17,7 @@ import { Vehicle } from '../../../../shared/models/vehicle.model';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, FormsModule, VehicleCardComponent, NavigationComponent, FilterModalComponent, ReservationModalComponent],
+  imports: [CommonModule, FormsModule, VehicleCardComponent, NavigationComponent, FilterModalComponent, ReservationModalComponent, PhotoUploadComponent],
   templateUrl: './home.page.html',
   styleUrl: './home.page.scss',
 })

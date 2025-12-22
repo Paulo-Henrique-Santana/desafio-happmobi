@@ -17,31 +17,6 @@
   gap: 10px;
 }
 
-.user-photo {
-  width: 104px;
-  height: 104px;
-  border-radius: 50%;
-  border: 2px solid $color-secondary;
-  box-shadow: 0px 3px 7.5px rgba(0, 0, 0, 0.45);
-  object-fit: cover;
-}
-
-.user-photo-placeholder {
-  width: 104px;
-  height: 104px;
-  border-radius: 50%;
-  border: 2px solid $color-secondary;
-  box-shadow: 0px 3px 7.5px rgba(0, 0, 0, 0.45);
-  background-color: $color-secondary;
-  @include mixins.flex();
-  
-  span {
-    font-size: 40px;
-    font-weight: 700;
-    color: $color-white;
-  }
-}
-
 .greeting {
   font-family: $font-family-primary;
   font-size: 21px;

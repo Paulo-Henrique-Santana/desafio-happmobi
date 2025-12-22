@@ -1,17 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
+    FormBuilder,
+    FormGroup,
+    ReactiveFormsModule,
+    Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import { VehicleService } from '../../../../core/services/vehicle/vehicle.service';
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
 import { ErrorMessageComponent } from '../../../../shared/components/error-message/error-message.component';
-import { NavigationComponent } from '../../../../shared/components/navigation/navigation.component';
+import { FormCardLayoutComponent } from '../../../../shared/components/form-card-layout/form-card-layout.component';
+import { PhotoUploadComponent } from '../../../../shared/components/photo-upload/photo-upload.component';
 import { VEHICLE_BODY_TYPES, VEHICLE_ENGINE_TYPES, VEHICLE_SEATS_OPTIONS } from '../../../../shared/constants/vehicle-options';
 import { CreateVehicleRequest, UpdateVehicleRequest } from '../../../../shared/models/vehicle.model';
 
@@ -23,7 +24,8 @@ import { CreateVehicleRequest, UpdateVehicleRequest } from '../../../../shared/m
     ReactiveFormsModule,
     ButtonComponent,
     ErrorMessageComponent,
-    NavigationComponent,
+    FormCardLayoutComponent,
+    PhotoUploadComponent,
   ],
   templateUrl: './create-vehicle.page.html',
   styleUrl: './create-vehicle.page.scss',

@@ -1,31 +1,10 @@
-<div class="create-vehicle-container">
-  <div class="page-header page-header--flex">
-    <button class="back-button" (click)="goBack()">← Voltar</button>
-    <h2 class="page-title">{{ isEditMode ? 'Editar Veículo' : 'Cadastrar Veículo' }}</h2>
-  </div>
-
-  <div class="content">
-    <div class="form-card">
-      <form [formGroup]="vehicleForm" (ngSubmit)="onSubmit()" class="vehicle-form">
-        <div class="photo-upload">
-          <label for="photo-input" class="photo-label">
-            @if (photoPreview) {
-              <img [src]="photoPreview" alt="Preview" class="photo-preview" />
-            } @else {
-              <div class="photo-placeholder">
-                <span>📷</span>
-                <p>Adicionar foto</p>
-              </div>
-            }
-          </label>
-          <input
-            id="photo-input"
-            type="file"
-            accept="image/*"
-            (change)="onFileSelected($event)"
-            class="photo-input"
-          />
-        </div>
+<app-form-card-layout [pageTitle]="isEditMode ? 'Editar Veículo' : 'Cadastrar Veículo'" (onBack)="goBack()">
+  <form [formGroup]="vehicleForm" (ngSubmit)="onSubmit()" class="vehicle-form">
+    <app-photo-upload 
+      [photoPreview]="photoPreview" 
+      [rounded]="false"
+      (fileSelected)="onFileSelected($event)"
+    />
 
         <div class="form-group">
           <label for="name">Nome do Veículo</label>
@@ -101,8 +80,4 @@
           />
         </div>
       </form>
-    </div>
-  </div>
-
-  <app-navigation />
-</div>
+</app-form-card-layout>

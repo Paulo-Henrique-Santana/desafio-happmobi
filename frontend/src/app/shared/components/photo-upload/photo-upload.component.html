@@ -1,0 +1,31 @@
+<div class="photo-upload">
+  @if (readonly()) {
+    <div [class]="'photo-display ' + (rounded() ? 'photo-display--rounded' : '') + ' photo-display--' + size()">
+      @if (photoPreview()) {
+        <img [src]="photoPreview()!" alt="Preview" class="photo-preview" />
+      } @else {
+        <div class="photo-placeholder">
+          <span>👤</span>
+        </div>
+      }
+    </div>
+  } @else {
+    <label for="photo-input" [class]="'photo-label ' + (rounded() ? 'photo-label--rounded' : '') + ' photo-label--' + size()">
+      @if (photoPreview()) {
+        <img [src]="photoPreview()!" alt="Preview" class="photo-preview" />
+      } @else {
+        <div class="photo-placeholder">
+          <span>📷</span>
+          <p>Adicionar foto</p>
+        </div>
+      }
+    </label>
+    <input
+      id="photo-input"
+      type="file"
+      accept="image/*"
+      (change)="onFileSelected($event)"
+      class="photo-input"
+    />
+  }
+</div>

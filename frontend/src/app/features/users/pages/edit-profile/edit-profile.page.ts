@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
+    FormBuilder,
+    FormGroup,
+    ReactiveFormsModule,
+    Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
@@ -12,7 +12,8 @@ import { AuthService } from '../../../../core/services/auth/auth.service';
 import { UserService } from '../../../../core/services/user/user.service';
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
 import { ErrorMessageComponent } from '../../../../shared/components/error-message/error-message.component';
-import { NavigationComponent } from '../../../../shared/components/navigation/navigation.component';
+import { FormCardLayoutComponent } from '../../../../shared/components/form-card-layout/form-card-layout.component';
+import { PhotoUploadComponent } from '../../../../shared/components/photo-upload/photo-upload.component';
 import { UpdateUserRequest, User } from '../../../../shared/models/user.model';
 import { passwordMatchValidator } from '../../../../shared/validators/password-match.validator';
 
@@ -24,7 +25,8 @@ import { passwordMatchValidator } from '../../../../shared/validators/password-m
     ReactiveFormsModule,
     ButtonComponent,
     ErrorMessageComponent,
-    NavigationComponent,
+    FormCardLayoutComponent,
+    PhotoUploadComponent,
   ],
   templateUrl: './edit-profile.page.html',
   styleUrl: './edit-profile.page.scss',
@@ -141,5 +143,9 @@ export class EditProfilePage implements OnInit {
           this.errorMessage = error.error?.message || 'Erro ao remover perfil';
         },
       });
+  }
+
+  goBack() {
+    this.router.navigate(['/home']);
   }
 }

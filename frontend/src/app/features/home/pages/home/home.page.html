@@ -2,13 +2,12 @@
   <div class="page-header page-header--user">
     <div class="header-content">
       <div class="user-info">
-        @if (user.photo) {
-          <img [src]="user.photo" alt="Foto do usuário" class="user-photo" />
-        } @else {
-          <div class="user-photo-placeholder">
-            <span>{{ user.name.charAt(0).toUpperCase() }}</span>
-          </div>
-        }
+        <app-photo-upload 
+          [photoPreview]="user.photo" 
+          [rounded]="true"
+          [readonly]="true"
+          [size]="'small'"
+        />
         <p class="greeting">Olá, {{ user.name }}</p>
       </div>
     </div>

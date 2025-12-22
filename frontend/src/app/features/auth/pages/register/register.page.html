@@ -3,25 +3,12 @@
     <app-logo-header />
 
     <form class="register-form" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-      <div class="photo-upload">
-        <label for="photo-input" class="photo-label">
-          @if (photoPreview) {
-            <img [src]="photoPreview" alt="Preview" class="photo-preview" />
-          } @else {
-            <div class="photo-placeholder">
-              <span>📷</span>
-              <p>Adicionar foto</p>
-            </div>
-          }
-        </label>
-        <input
-          id="photo-input"
-          type="file"
-          accept="image/*"
-          (change)="onFileSelected($event)"
-          class="photo-input"
-        />
-      </div>
+      <app-photo-upload 
+        [photoPreview]="photoPreview" 
+        [rounded]="true"
+        [size]="'medium'"
+        (fileSelected)="onFileSelected($event)"
+      />
 
       <input
         type="text"

@@ -1,32 +1,10 @@
-<div class="edit-profile-container">
-  <div class="page-header page-header--flex">
-    <h2 class="page-title">Editar Perfil</h2>
-    
-    <div class="photo-section">
-      <div class="photo-container">
-        @if (photoPreview) {
-          <img [src]="photoPreview" alt="Foto de perfil" class="photo-preview" />
-        } @else {
-          <div class="photo-placeholder">
-            <span>{{ editForm.value.name?.charAt(0).toUpperCase() || 'U' }}</span>
-          </div>
-        }
-      </div>
-      <label for="photo-input" class="change-photo-btn">
-        Alterar foto
-      </label>
-      <input
-        id="photo-input"
-        type="file"
-        accept="image/*"
-        (change)="onFileSelected($event)"
-        class="file-input"
-      />
-    </div>
-  </div>
-
-  <div class="content">
-    <form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="edit-form">
+<app-form-card-layout [pageTitle]="'Editar Perfil'" (onBack)="goBack()">
+  <form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="edit-form">
+    <app-photo-upload 
+      [photoPreview]="photoPreview" 
+      [rounded]="true"
+      (fileSelected)="onFileSelected($event)"
+    />
       <div class="form-group">
         <label for="name">Nome completo</label>
         <input
@@ -96,8 +74,5 @@
           (clicked)="onDelete()"
         />
       </div>
-    </form>
-  </div>
-
-  <app-navigation />
-</div>
+  </form>
+</app-form-card-layout>

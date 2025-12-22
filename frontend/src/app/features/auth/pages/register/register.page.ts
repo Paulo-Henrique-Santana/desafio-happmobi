@@ -1,9 +1,9 @@
 import { Component, inject } from '@angular/core';
 import {
-    FormBuilder,
-    FormGroup,
-    ReactiveFormsModule,
-    Validators,
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
@@ -11,6 +11,7 @@ import { UserService } from '../../../../core/services/user/user.service';
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
 import { ErrorMessageComponent } from '../../../../shared/components/error-message/error-message.component';
 import { LogoHeaderComponent } from '../../../../shared/components/logo-header/logo-header.component';
+import { PhotoUploadComponent } from '../../../../shared/components/photo-upload/photo-upload.component';
 import { CreateUserRequest } from '../../../../shared/models/user.model';
 import { passwordMatchValidator } from '../../../../shared/validators/password-match.validator';
 
@@ -22,6 +23,7 @@ import { passwordMatchValidator } from '../../../../shared/validators/password-m
     LogoHeaderComponent,
     ButtonComponent,
     ErrorMessageComponent,
+    PhotoUploadComponent,
   ],
   templateUrl: './register.page.html',
   styleUrl: './register.page.scss',

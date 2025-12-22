@@ -1,0 +1,14 @@
+<div class="form-card-container">
+  <div class="page-header page-header--flex">
+    <button class="back-button" (click)="handleBack()">← Voltar</button>
+    <h2 class="page-title">{{ pageTitle() }}</h2>
+  </div>
+
+  <div class="content">
+    <div class="form-card">
+      <ng-content />
+    </div>
+  </div>
+
+  <app-navigation />
+</div>
