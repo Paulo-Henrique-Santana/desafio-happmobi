@@ -34,25 +34,7 @@ export class HomePage implements OnInit {
   searchQuery = '';
   isSearching = false;
   searchResults: Vehicle[] = [];
-
-  lastReservations: Vehicle[] = [
-    {
-      id: '1',
-      photo: 'https://images.unsplash.com/photo-1580274455191-1c62238fa333?w=400',
-      name: 'Mini Cooper - 2021',
-      bodyType: 'Hatchback',
-      engineType: '1.8',
-      seats: 5,
-    },
-    {
-      id: '2',
-      photo: 'https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=400',
-      name: 'Jeep Compass - 2021',
-      bodyType: 'SUV',
-      engineType: '1.8',
-      seats: 7,
-    },
-  ];
+  lastReservations: Vehicle[] = [];
 
   get vehicles() {
     return this.searchQuery || this.hasActiveFilters ? this.searchResults : this.lastReservations;
@@ -72,6 +54,21 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     this.setupSearchSubscription();
+    this.loadUserReservations();
+  }
+
+  loadUserReservations() {
+    this.reservationService.getAll().subscribe({
+      next: (reservations) => {
+        this.lastReservations = reservations
+          .filter(r => r.vehicle)
+          .map(r => r.vehicle!);
+      },
+      error: (error) => {
+        console.error('Erro ao buscar reservas:', error);
+        this.lastReservations = [];
+      },
+    });
   }
 
   setupSearchSubscription() {
@@ -168,6 +165,7 @@ export class HomePage implements OnInit {
   }
 
   onReservationSuccess() {
+    this.loadUserReservations();
     if (this.searchQuery || this.hasActiveFilters) {
       this.applyFilters(this.activeFilters || { bodyTypes: [], engineTypes: [], seats: [] });
     }
