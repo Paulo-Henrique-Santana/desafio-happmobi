@@ -13,6 +13,7 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AdminGuard } from '../auth/guards/admin.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CreateVehicleDto } from './dto/create-vehicle.dto';
 import { FilterVehicleDto } from './dto/filter-vehicle.dto';
 import { UpdateVehicleDto } from './dto/update-vehicle.dto';
@@ -33,6 +34,7 @@ export class VehiclesController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   findAll(@Query() query: any) {
     const filters: FilterVehicleDto = {
       name: query.name,
@@ -45,6 +47,7 @@ export class VehiclesController {
   }
 
   @Get(':id')
+  @UseGuards(JwtAuthGuard)
   findOne(@Param('id') id: string) {
     return this.service.findOne(id);
   }
