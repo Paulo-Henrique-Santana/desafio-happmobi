@@ -21,7 +21,7 @@
         <input type="text" placeholder="Buscar carro" class="search-input" />
       </div>
       
-      <button class="filter-button">
+      <button class="filter-button" (click)="openFilterModal()">
         <div class="filter-icon">
           <span class="line line-1"></span>
           <span class="line line-2"></span>
@@ -39,6 +39,12 @@
       }
     </div>
   </div>
+
+  <app-filter-modal
+    [isOpen]="isFilterModalOpen"
+    (closeModal)="closeFilterModal()"
+    (applyFilters)="applyFilters($event)"
+  />
 
   <app-navigation />
 </div>

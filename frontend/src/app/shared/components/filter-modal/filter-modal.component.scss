@@ -1,0 +1,311 @@
+@use "variables" as *;
+@use "mixins";
+
+.filter-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+
+  &.open {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.filter-modal {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #F5F5F5;
+  border-radius: 0;
+  max-height: 100vh;
+  height: 100vh;
+  overflow-y: auto;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+
+  &.open {
+    transform: translateY(0);
+  }
+
+  @media (min-width: 768px) {
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    top: 50%;
+    transform: translate(-50%, calc(-50% + 100%));
+    border-radius: 12px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    height: auto;
+
+    &.open {
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    left: calc(280px + 50%);
+    transform: translate(calc(-50% - 140px), calc(-50% + 100%));
+
+    &.open {
+      transform: translate(calc(-50% - 140px), -50%);
+    }
+  }
+}
+
+.filter-header-dark {
+  background-color: $color-primary;
+  padding: 60px 20px 30px;
+  @include mixins.flex(row, center, center);
+  gap: 12px;
+  position: relative;
+
+  .search-icon {
+    flex-shrink: 0;
+    width: 23px;
+    height: 23px;
+  }
+}
+
+.header-title {
+  font-family: $font-family-primary;
+  font-size: 24px;
+  font-weight: 400;
+  color: $color-white;
+  margin: 0;
+  letter-spacing: 1px;
+}
+
+.filter-actions-top {
+  @include mixins.flex(row, space-around, center);
+  background-color: #F5F5F5;
+  padding: 20px;
+  border-bottom: 1px solid #E0E0E0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.action-button {
+  background: none;
+  border: none;
+  font-family: $font-family-secondary;
+  font-size: 14px;
+  font-weight: 600;
+  color: #666;
+  cursor: pointer;
+  padding: 8px 16px;
+  transition: color 0.2s;
+
+  &.active {
+    color: $color-primary;
+  }
+
+  &:hover {
+    color: $color-primary;
+  }
+}
+
+.filter-content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  background-color: #F5F5F5;
+}
+
+.filter-section {
+  background-color: $color-white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.filter-section-header {
+  @include mixins.flex(row, space-between, center);
+  margin-bottom: 16px;
+  cursor: pointer;
+  user-select: none;
+  padding: 16px 20px;
+  border-bottom: 1px solid #E8E8E8;
+  
+  &:hover {
+    .filter-section-title {
+      color: #000;
+    }
+  }
+}
+
+.filter-section-title {
+  font-family: $font-family-secondary;
+  font-size: 16px;
+  font-weight: 400;
+  color: #333;
+  margin: 0;
+}
+
+.arrow-icon {
+  flex-shrink: 0;
+  width: 10px;
+  height: 16px;
+  transition: transform 0.3s ease;
+  transform: rotate(-90deg);
+  
+  &.expanded {
+    transform: rotate(90deg);
+  }
+}
+
+.checkbox-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.checkbox-label {
+  @include mixins.flex(row, flex-start, center);
+  gap: 10px;
+  cursor: pointer;
+  position: relative;
+}
+
+.checkbox-input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+
+  &:checked + .checkbox-custom {
+    background-color: #C73839;
+    border-color: #C73839;
+
+    &::after {
+      display: block;
+    }
+  }
+}
+
+.checkbox-custom {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #999;
+  border-radius: 3px;
+  flex-shrink: 0;
+  position: relative;
+  transition: all 0.2s;
+
+  &::after {
+    content: '';
+    position: absolute;
+    display: none;
+    left: 5px;
+    top: 1px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+}
+
+.checkbox-text {
+  font-family: $font-family-secondary;
+  font-size: 14px;
+  color: #333;
+}
+
+.filter-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.filter-pill {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 24px;
+  background-color: $color-white;
+  border: 2px solid #E0E0E0;
+  font-family: $font-family-secondary;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+
+  &:hover:not(.selected) {
+    border-color: #C73839;
+  }
+
+  &.selected {
+    background-color: #C73839;
+    border-color: #C73839;
+    color: $color-white;
+    font-weight: 600;
+  }
+}
+
+.seats-pill {
+  min-width: 60px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.filter-footer {
+  padding: 20px;
+  background-color: #F5F5F5;
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+}
+
+.apply-button {
+  width: 100%;
+  padding: 18px 24px;
+  border: none;
+  border-radius: 28px;
+  background-color: #2C3E50;
+  color: $color-white;
+  font-family: $font-family-secondary;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+
+  &:hover {
+    background-color: #1a252f;
+    transform: translateY(-2px);
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+  }
+}
+
+@media (min-width: 768px) {
+  .filter-modal {
+    max-height: 80vh;
+  }
+
+  .filter-content {
+    padding: 24px;
+  }
+
+  .filter-footer {
+    padding: 24px;
+  }
+
+  .checkbox-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}

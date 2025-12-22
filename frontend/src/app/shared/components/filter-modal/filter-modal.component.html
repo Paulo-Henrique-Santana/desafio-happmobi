@@ -1,0 +1,100 @@
+<div class="filter-modal-overlay" [class.open]="isOpen()" (click)="onBackdropClick($event)">
+  <div class="filter-modal" [class.open]="isOpen()">
+    <div class="filter-header-dark">
+      <img src="/assets/images/search-icon-red.svg" alt="Buscar" class="search-icon" />
+      <h1 class="header-title">BUSCA</h1>
+    </div>
+
+    <div class="filter-actions-top">
+      <button class="action-button" (click)="close()">CANCELAR</button>
+      <button class="action-button active">FILTROS</button>
+      <button class="action-button" (click)="onClearFilters()">LIMPAR</button>
+    </div>
+
+    <div class="filter-content">
+      <div class="filter-section-header" (click)="toggleBodyTypesSection()">
+        <h3 class="filter-section-title">Tipos de carrocerias</h3>
+        <img 
+          src="/assets/images/arrow-right-red.svg" 
+          alt="" 
+          class="arrow-icon" 
+          [class.expanded]="isBodyTypesExpanded"
+        />
+      </div>
+      @if (isBodyTypesExpanded) {
+        <div class="filter-section">
+          <div class="checkbox-grid">
+            @for (option of bodyTypeOptions; track option.value) {
+              <label class="checkbox-label">
+                <input
+                  type="checkbox"
+                  [checked]="isBodyTypeSelected(option.value)"
+                  (change)="toggleBodyType(option.value)"
+                  class="checkbox-input"
+                />
+                <span class="checkbox-custom"></span>
+                <span class="checkbox-text">{{ option.label }}</span>
+              </label>
+            }
+          </div>
+        </div>
+      }
+
+      <div class="filter-section-header" (click)="toggleEngineTypesSection()">
+        <h3 class="filter-section-title">Tipos de motores</h3>
+        <img 
+          src="/assets/images/arrow-right-red.svg" 
+          alt="" 
+          class="arrow-icon"
+          [class.expanded]="isEngineTypesExpanded"
+        />
+      </div>
+      @if (isEngineTypesExpanded) {
+        <div class="filter-section">
+          <div class="filter-options">
+            @for (option of engineTypeOptions; track option.value) {
+              <button
+                class="filter-pill"
+                [class.selected]="isEngineTypeSelected(option.value)"
+                (click)="toggleEngineType(option.value)"
+              >
+                {{ option.label }}
+              </button>
+            }
+          </div>
+        </div>
+      }
+
+      <div class="filter-section-header" (click)="toggleSeatsSection()">
+        <h3 class="filter-section-title">Quantidade de lugares</h3>
+        <img 
+          src="/assets/images/arrow-right-red.svg" 
+          alt="" 
+          class="arrow-icon"
+          [class.expanded]="isSeatsExpanded"
+        />
+      </div>
+      @if (isSeatsExpanded) {
+        <div class="filter-section">
+          <div class="filter-options">
+            @for (seats of seatsOptions; track seats) {
+              <button
+                class="filter-pill seats-pill"
+                [class.selected]="isSeatsSelected(seats)"
+                (click)="toggleSeats(seats)"
+              >
+                {{ seats < 10 ? '0' + seats : seats }}
+              </button>
+            }
+          </div>
+        </div>
+      }
+    </div>
+
+    <div class="filter-footer">
+      <button class="apply-button" (click)="onApplyFilters()">
+        APLICAR FILTRO
+      </button>
+    </div>
+  </div>
+</div>
