@@ -4,11 +4,12 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { PrismaService } from './prisma/prisma.service';
 import { ReservationsModule } from './reservations/reservations.module';
+import { SeedModule } from './seed/seed.module';
 import { UsersModule } from './users/users.module';
 import { VehiclesModule } from './vehicles/vehicles.module';
 
 @Module({
-  imports: [UsersModule, AuthModule, VehiclesModule, ReservationsModule],
+  imports: [UsersModule, AuthModule, VehiclesModule, ReservationsModule, SeedModule],
   controllers: [AppController],
   providers: [AppService, PrismaService],
 })
