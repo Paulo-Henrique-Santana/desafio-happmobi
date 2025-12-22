@@ -14,13 +14,15 @@
         [text]="'Liberar Veículo'" 
         [type]="'button'"
         [variant]="'secondary'"
+        [size]="'small'"
         (clicked)="onCancelClick()"
       />
     } @else {
       <app-button 
         [text]="'Reservar'" 
         [type]="'button'"
-        [variant]="'secondary'"
+        [variant]="'primary'"
+        [size]="'small'"
         (clicked)="onReserveClick()"
       />
     }

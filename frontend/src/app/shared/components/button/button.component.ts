@@ -14,5 +14,6 @@ export class ButtonComponent {
   disabled = input<boolean>(false);
   type = input<'submit' | 'button'>('submit');
   variant = input<'primary' | 'secondary' | 'danger'>('primary');
+  size = input<'small' | 'medium' | 'large'>('large');
   clicked = output<void>();
 }
