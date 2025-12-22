@@ -32,14 +32,31 @@
       </button>
     </div>
 
-    @if (showLastReservations) {
-      <h2 class="section-title">Últimas reservas</h2>
-    } @else {
-      <h2 class="section-title">Resultados da busca</h2>
+    @if (hasSearchOrFilters) {
+      <div class="search-results-section">
+        <h2 class="section-title">Resultados da busca</h2>
+        <div class="vehicles-list">
+          @if (userReservations$ | async; as reservations) {
+            @for (vehicle of searchResults; track vehicle.id) {
+              <app-vehicle-card 
+                [vehicle]="vehicle" 
+                [isReserved]="isVehicleReserved(vehicle.id, reservations)"
+                [reservationId]="getReservationId(vehicle.id, reservations)"
+                (reserveVehicle)="openReservationModal($event)"
+                (cancelReservation)="onCancelReservation($event)"
+              />
+            }
+          }
+        </div>
+      </div>
+
+      <div class="section-divider"></div>
     }
 
-    <div class="vehicles-list">
-      @if (vehicles$ | async; as vehicles) {
+    <div class="last-reservations-section">
+      <h2 class="section-title">Últimas reservas</h2>
+      <div class="vehicles-list">
+      @if (lastReservations$ | async; as vehicles) {
         @if (userReservations$ | async; as reservations) {
           @for (vehicle of vehicles; track vehicle.id) {
             <app-vehicle-card 
@@ -52,6 +69,7 @@
           }
         }
       }
+    </div>
     </div>
   </div>
 

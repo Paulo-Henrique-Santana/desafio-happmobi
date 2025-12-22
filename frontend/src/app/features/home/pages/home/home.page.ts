@@ -40,15 +40,8 @@ export class HomePage implements OnInit {
   lastReservations$!: Observable<Vehicle[]>;
   userReservations$!: Observable<Map<string, string>>;
 
-  get vehicles$(): Observable<Vehicle[]> {
-    if (this.searchQuery || this.hasActiveFilters) {
-      return new BehaviorSubject(this.searchResults).asObservable();
-    }
-    return this.lastReservations$;
-  }
-
-  get showLastReservations() {
-    return !this.searchQuery && !this.hasActiveFilters;
+  get hasSearchOrFilters() {
+    return this.searchQuery.trim() || this.hasActiveFilters;
   }
 
   get hasActiveFilters() {
