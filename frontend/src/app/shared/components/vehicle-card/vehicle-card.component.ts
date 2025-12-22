@@ -1,14 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, input } from '@angular/core';
-
-interface Vehicle {
-  id: number;
-  image: string;
-  name: string;
-  bodyType: string;
-  engineType: string;
-  seats: number;
-}
+import { Vehicle } from '../../models/vehicle.model';
 
 @Component({
   selector: 'app-vehicle-card',

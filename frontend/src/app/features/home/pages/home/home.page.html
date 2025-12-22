@@ -18,7 +18,13 @@
     <div class="search-section">
       <div class="search-bar">
         <img src="/assets/images/search-icon.svg" alt="Buscar" class="search-icon" />
-        <input type="text" placeholder="Buscar carro" class="search-input" />
+        <input 
+          type="text" 
+          placeholder="Buscar carro" 
+          class="search-input"
+          [(ngModel)]="searchQuery"
+          (ngModelChange)="onSearchChange($event)"
+        />
       </div>
       
       <button class="filter-button" (click)="openFilterModal()">
@@ -31,7 +37,11 @@
       </button>
     </div>
 
-    <h2 class="section-title">Últimas reservas</h2>
+    @if (showLastReservations) {
+      <h2 class="section-title">Últimas reservas</h2>
+    } @else {
+      <h2 class="section-title">Resultados da busca</h2>
+    }
 
     <div class="vehicles-list">
       @for (vehicle of vehicles; track vehicle.id) {

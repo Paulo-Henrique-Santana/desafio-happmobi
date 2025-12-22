@@ -5,8 +5,6 @@ export interface Vehicle {
   bodyType: string;
   engineType: string;
   seats: number;
-  createdAt: string;
-  updatedAt: string;
 }
 
 export interface CreateVehicleRequest {
