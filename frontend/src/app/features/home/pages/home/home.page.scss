@@ -7,29 +7,7 @@
   padding-bottom: 98px;
 }
 
-.header {
-  background-color: $color-primary;
-  padding: 71px 20px 50px;
-  position: relative;
-  
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -389px;
-    right: 0;
-    height: 270px;
-    background-image: url('/assets/images/header-background.png');
-    background-size: cover;
-    background-position: center;
-    opacity: 0.12;
-    z-index: 0;
-  }
-}
-
 .header-content {
-  position: relative;
-  z-index: 1;
   max-width: 1200px;
   margin: 0 auto;
 }

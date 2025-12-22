@@ -1,8 +1,56 @@
 @use 'variables' as *;
+@use 'mixins';
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Poppins:wght@400;500;700&display=swap');
 
 body {
   font-family: $font-family-primary;
+}
+
+.page-header {
+  background-color: $color-primary;
+  padding: 50px 20px 30px;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -389px;
+    right: 0;
+    height: 100%;
+    background-image: url('/assets/images/header-background.png');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.12;
+    z-index: 0;
+  }
+
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  &.page-header--user {
+    padding: 71px 20px 50px;
+
+    &::before {
+      height: 270px;
+    }
+  }
+
+  &.page-header--flex {
+    @include mixins.flex();
+    gap: 20px;
+  }
+}
+
+.page-title {
+  font-family: $font-family-primary;
+  font-size: 24px;
+  font-weight: 700;
+  color: $color-white;
+  margin: 0;
+  text-align: center;
 }
 
 .input-field {
