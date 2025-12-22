@@ -46,12 +46,9 @@
             class="input-field"
           >
             <option value="">Selecione</option>
-            <option value="Sedan">Sedan</option>
-            <option value="Hatchback">Hatchback</option>
-            <option value="SUV">SUV</option>
-            <option value="Picape">Picape</option>
-            <option value="Van">Van</option>
-            <option value="Conversível">Conversível</option>
+            @for (option of bodyTypeOptions; track option.value) {
+              <option [value]="option.value">{{ option.label }}</option>
+            }
           </select>
         </div>
 
@@ -63,24 +60,24 @@
             class="input-field"
           >
             <option value="">Selecione</option>
-            <option value="Gasolina">Gasolina</option>
-            <option value="Diesel">Diesel</option>
-            <option value="Flex">Flex</option>
-            <option value="Elétrico">Elétrico</option>
-            <option value="Híbrido">Híbrido</option>
+            @for (option of engineTypeOptions; track option.value) {
+              <option [value]="option.value">{{ option.label }}</option>
+            }
           </select>
         </div>
 
         <div class="form-group">
           <label for="seats">Quantidade de Lugares</label>
-          <input
+          <select
             id="seats"
-            type="number"
             formControlName="seats"
-            placeholder="Ex: 5"
             class="input-field"
-            min="1"
-          />
+          >
+            <option [value]="null">Selecione</option>
+            @for (seats of seatsOptions; track seats) {
+              <option [value]="seats">{{ seats }}</option>
+            }
+          </select>
         </div>
 
         @if (errorMessage) {

@@ -12,6 +12,7 @@ import { VehicleService } from '../../../../core/services/vehicle/vehicle.servic
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
 import { ErrorMessageComponent } from '../../../../shared/components/error-message/error-message.component';
 import { NavigationComponent } from '../../../../shared/components/navigation/navigation.component';
+import { VEHICLE_BODY_TYPES, VEHICLE_ENGINE_TYPES, VEHICLE_SEATS_OPTIONS } from '../../../../shared/constants/vehicle-options';
 import { CreateVehicleRequest, UpdateVehicleRequest } from '../../../../shared/models/vehicle.model';
 
 @Component({
@@ -40,11 +41,15 @@ export class VehicleFormPage implements OnInit {
   selectedFile: File | null = null;
   photoPreview: string | null = null;
 
+  bodyTypeOptions = VEHICLE_BODY_TYPES;
+  engineTypeOptions = VEHICLE_ENGINE_TYPES;
+  seatsOptions = VEHICLE_SEATS_OPTIONS;
+
   vehicleForm: FormGroup = this.fb.group({
     name: ['', [Validators.required]],
     bodyType: ['', [Validators.required]],
     engineType: ['', [Validators.required]],
-    seats: ['', [Validators.required, Validators.min(1)]],
+    seats: [null, [Validators.required, Validators.min(1)]],
   });
 
   ngOnInit() {
