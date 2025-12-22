@@ -41,7 +41,13 @@
 
     <div class="vehicles-list">
       @for (vehicle of vehicles; track vehicle.id) {
-        <app-vehicle-card [vehicle]="vehicle" (reserveVehicle)="openReservationModal($event)" />
+        <app-vehicle-card 
+          [vehicle]="vehicle" 
+          [isReserved]="isVehicleReserved(vehicle.id)"
+          [reservationId]="getReservationId(vehicle.id)"
+          (reserveVehicle)="openReservationModal($event)"
+          (cancelReservation)="onCancelReservation($event)"
+        />
       }
     </div>
   </div>

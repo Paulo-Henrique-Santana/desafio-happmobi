@@ -35,6 +35,7 @@ export class HomePage implements OnInit {
   isSearching = false;
   searchResults: Vehicle[] = [];
   lastReservations: Vehicle[] = [];
+  userReservations: Map<string, string> = new Map();
 
   get vehicles() {
     return this.searchQuery || this.hasActiveFilters ? this.searchResults : this.lastReservations;
@@ -60,6 +61,14 @@ export class HomePage implements OnInit {
   loadUserReservations() {
     this.reservationService.getAll().subscribe({
       next: (reservations) => {
+        this.userReservations.clear();
+        
+        reservations.forEach(r => {
+          if (r.vehicle && r.status === 'active') {
+            this.userReservations.set(r.vehicle.id, r.id);
+          }
+        });
+
         this.lastReservations = reservations
           .filter(r => r.vehicle)
           .map(r => r.vehicle!);
@@ -168,6 +177,24 @@ export class HomePage implements OnInit {
     this.loadUserReservations();
     if (this.searchQuery || this.hasActiveFilters) {
       this.applyFilters(this.activeFilters || { bodyTypes: [], engineTypes: [], seats: [] });
+    }
+  }
+
+  isVehicleReserved(vehicleId: string): boolean {
+    return this.userReservations.has(vehicleId);
+  }
+
+  getReservationId(vehicleId: string): string | null {
+    return this.userReservations.get(vehicleId) || null;
+  }
+
+  onCancelReservation(reservationId: string) {
+    if (confirm('Deseja realmente liberar este veículo?')) {
+      this.reservationService.cancel(reservationId).subscribe({
+        next: () => {
+          this.loadUserReservations();
+        },
+      });
     }
   }
 }

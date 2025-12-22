@@ -12,9 +12,18 @@ import { ButtonComponent } from '../button/button.component';
 })
 export class VehicleCardComponent {
   vehicle = input.required<Vehicle>();
+  isReserved = input<boolean>(false);
+  reservationId = input<string | null>(null);
   reserveVehicle = output<Vehicle>();
+  cancelReservation = output<string>();
 
   onReserveClick() {
     this.reserveVehicle.emit(this.vehicle());
+  }
+
+  onCancelClick() {
+    if (this.reservationId()) {
+      this.cancelReservation.emit(this.reservationId()!);
+    }
   }
 }
