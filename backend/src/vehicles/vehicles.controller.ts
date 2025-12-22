@@ -19,11 +19,11 @@ import { UpdateVehicleDto } from './dto/update-vehicle.dto';
 import { VehiclesService } from './vehicles.service';
 
 @Controller('vehicles')
-@UseGuards(AdminGuard)
 export class VehiclesController {
   constructor(private service: VehiclesService) {}
 
   @Post()
+  @UseGuards(AdminGuard)
   @UseInterceptors(FileInterceptor('photo'))
   create(
     @Body() dto: CreateVehicleDto,
@@ -50,6 +50,7 @@ export class VehiclesController {
   }
 
   @Patch(':id')
+  @UseGuards(AdminGuard)
   @UseInterceptors(FileInterceptor('photo'))
   update(
     @Param('id') id: string,
@@ -60,6 +61,7 @@ export class VehiclesController {
   }
 
   @Delete(':id')
+  @UseGuards(AdminGuard)
   remove(@Param('id') id: string) {
     return this.service.remove(id);
   }
