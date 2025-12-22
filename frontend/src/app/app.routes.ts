@@ -1,52 +1,63 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
 import { guestGuard } from './core/guards/guest.guard';
-import { LoginPage } from './features/auth/pages/login/login.page';
-import { RegisterPage } from './features/auth/pages/register/register.page';
-import { HomePage } from './features/home/pages/home/home.page';
-import { EditProfilePage } from './features/users/pages/edit-profile/edit-profile.page';
-import { VehicleFormPage } from './features/vehicles/pages/vehicle-form/create-vehicle.page';
-import { VehiclesPage } from './features/vehicles/pages/vehicles/vehicles.page';
 
 export const routes: Routes = [
   {
     path: '',
     redirectTo: 'login',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'login',
-    loadComponent: () => LoginPage,
-    canActivate: [guestGuard]
+    loadComponent: () =>
+      import('./features/auth/pages/login/login.page').then((m) => m.LoginPage),
+    canActivate: [guestGuard],
   },
   {
     path: 'cadastro',
-    loadComponent: () => RegisterPage,
-    canActivate: [guestGuard]
+    loadComponent: () =>
+      import('./features/auth/pages/register/register.page').then(
+        (m) => m.RegisterPage
+      ),
+    canActivate: [guestGuard],
   },
   {
     path: 'home',
-    loadComponent: () => HomePage,
-    canActivate: [authGuard]
+    loadComponent: () =>
+      import('./features/home/pages/home/home.page').then((m) => m.HomePage),
+    canActivate: [authGuard],
   },
   {
     path: 'perfil',
-    loadComponent: () => EditProfilePage,
-    canActivate: [authGuard]
+    loadComponent: () =>
+      import('./features/users/pages/edit-profile/edit-profile.page').then(
+        (m) => m.EditProfilePage
+      ),
+    canActivate: [authGuard],
   },
   {
     path: 'veiculos',
-    loadComponent: () => VehiclesPage,
-    canActivate: [authGuard]
+    loadComponent: () =>
+      import('./features/vehicles/pages/vehicles/vehicles.page').then(
+        (m) => m.VehiclesPage
+      ),
+    canActivate: [authGuard],
   },
   {
     path: 'veiculos/novo',
-    loadComponent: () => VehicleFormPage,
-    canActivate: [authGuard]
+    loadComponent: () =>
+      import('./features/vehicles/pages/vehicle-form/create-vehicle.page').then(
+        (m) => m.VehicleFormPage
+      ),
+    canActivate: [authGuard],
   },
   {
     path: 'veiculos/:id',
-    loadComponent: () => VehicleFormPage,
-    canActivate: [authGuard]
-  }
+    loadComponent: () =>
+      import('./features/vehicles/pages/vehicle-form/create-vehicle.page').then(
+        (m) => m.VehicleFormPage
+      ),
+    canActivate: [authGuard],
+  },
 ];
